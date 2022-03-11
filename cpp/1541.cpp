@@ -16,12 +16,18 @@ int main(int argc,char* argv[]){
     fgets(string,sizeof(char)*50,stdin);
     string[strlen(string)-1]='\0'; // receive formula as string
 	char* ptr=strtok(string,"-"); 
-	int min_sum=get_slicedNumber(ptr);
+	int min_sum=atoi(ptr);
+	for(int i=0; i<strlen(ptr); i++){
+		if(ptr[i]=='+') {
+			min_sum=get_slicedNumber(ptr);
+			break;
+		}
+	}
 	ptr=strtok(NULL,"-");
 //	printf("first_sum: %d\n",min_sum);
 	while(ptr!=NULL){
 //		printf("slicing(except first): %s\n",ptr);
-		min_sum-=change_plus_formula(ptr);
+		min_sum-=get_slicedNumber(ptr);
 		ptr=strtok(NULL,"-");
 	}
 	printf("%d\n",min_sum);
