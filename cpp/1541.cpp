@@ -1,35 +1,36 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include <iostream>
+#include <string>
+#include <cstdlib>
 #include <queue>
-#include <string.h>
-int get_slicedNumber(char* string){
-	int sum=atoi(strtok(string,"+"));
-	char* sliced=strtok(NULL,"+");
-	while(sliced!=NULL){
-		sum+=atoi(sliced);
-		sliced=strtok(NULL,"+");
-	}
-	return sum;
-}
-int main(int argc,char* argv[]){
-    char* string=(char*)malloc(sizeof(char)*50);
-    fgets(string,sizeof(char)*50,stdin);
-    string[strlen(string)-1]='\0'; // receive formula as string
-	char* ptr=strtok(string,"-"); 
-	int min_sum=atoi(ptr);
-	for(int i=0; i<strlen(ptr); i++){
-		if(ptr[i]=='+') {
-			min_sum=get_slicedNumber(ptr);
-			break;
+using namespace std;
+
+int main(int argc, char* argv[]){
+	string input;
+	getline(cin, input);
+	int a=0,sum=0,result=0;
+	queue<int> value;
+	for(int i=0; i<input.length(); i++){
+		if(input[i] == '-'){
+			int number=atoi(input.substr(a,i-a).c_str()); // number
+			sum+=number;
+			value.push(sum);
+			sum=0;
+			a=i+1;
+		}
+		else if(input[i] == '+'){
+			int number=atoi(input.substr(a,i-a).c_str());
+			sum+=number;
+			a=i+1;
 		}
 	}
-	ptr=strtok(NULL,"-");
-//	printf("first_sum: %d\n",min_sum);
-	while(ptr!=NULL){
-//		printf("slicing(except first): %s\n",ptr);
-		min_sum-=get_slicedNumber(ptr);
-		ptr=strtok(NULL,"-");
+	sum+=atoi(input.substr(a,input.length()-a).c_str()); // post fence problem
+	value.push(sum);
+	result=value.front();
+	value.pop();
+	while(!value.empty()){
+		result-=value.front();
+		value.pop();
 	}
-	printf("%d\n",min_sum);
-    return 0;
+	cout << result;
+	return 0;
 }
