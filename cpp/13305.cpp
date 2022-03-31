@@ -18,8 +18,8 @@ int main(int argc, char *argv[]){
 		i++;
 	}while(getc(stdin) == ' ');
 	int cheeper=city[0];
-	int fee=0;
-	int distance=roads[0];
+	long long int fee=0;
+	long long int distance=roads[0];
 	for(int i=1; i<city.size()-1; i++){
 		if(city[i] < cheeper){	
 			fee+=cheeper*distance;
