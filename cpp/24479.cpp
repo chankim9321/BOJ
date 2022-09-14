@@ -2,7 +2,7 @@
 #include <vector>
 #include <list>
 using namespace std;
-vector<int> visited(100000,0);
+vector<int> visited(100001,0);
 vector<pair<int, int> > sequence;
 void print_pair(pair<int,int> &node){
 	cout << node.second << endl;
