@@ -56,7 +56,7 @@ int main(){
   for(int i=1; i<=numOfVertex; i++){ 
     if(!visited[i]){
       visited[i]=1;
-	  cout << 0 << end;
+	  cout << 0 << endl;
     }  
   }
   return 0;
