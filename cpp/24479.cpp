@@ -1,6 +1,8 @@
 #include <iostream>
 #include <vector>
 #include <list>
+#include <algorithm>
+
 using namespace std;
 vector<int> visited(100001,0);
 vector<pair<int, int> > sequence;
