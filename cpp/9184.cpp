@@ -31,7 +31,10 @@ int w(int a, int b, int c){
 int main(int argc, char* argv[]){
 	int a, b, c;
 	fill(&matrix[0][0][0], &matrix[20][20][21], 0);
-	cin >> a >> b >> c;
-	cout << "w(" << a << ", " << b << ", " << c << ") = " << w(a,b,c)  << "\n";
+	while(true){
+		cin >> a >> b >> c;
+		if(a == -1 AND b == -1 AND c == -1) break;
+		cout << "w(" << a << ", " << b << ", " << c << ") = " << w(a,b,c)  << "\n";
+	}
 	return 0;
 }
