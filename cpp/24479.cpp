@@ -7,7 +7,7 @@ using namespace std;
 vector<int> visited(100001,0);
 vector<pair<int, int> > sequence;
 void print_pair(pair<int,int> &node){
-	cout << node.second << endl;
+	cout << node.second << "\n";
 }
 int seq=1;
 class Node{
@@ -53,13 +53,13 @@ int main(){
     graph[i].link.sort();
   }
   dfs(graph,root);
-  sort(sequence.begin(), sequence.end());
-  for_each(sequence.begin(), sequence.end(), print_pair);
   for(int i=1; i<=numOfVertex; i++){ 
     if(!visited[i]){
       visited[i]=1;
-	  cout << 0 << endl;
+	  sequence.push_back(make_pair(i, 0));
     }  
   }
+  sort(sequence.begin(), sequence.end());
+  for_each(sequence.begin(), sequence.end(), print_pair);
   return 0;
 }
