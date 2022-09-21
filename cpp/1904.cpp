@@ -25,7 +25,7 @@ int solution(int n){
 	if(n==2) return 2; // D[2] = 2
 
 	if(cache[n] == 0){
-		return solution(n-1)+ solution(n-2);
+		return cache[n] = solution(n-1) + solution(n-2);
 	}
 	else{
 		return cache[n];
