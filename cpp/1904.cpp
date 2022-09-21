@@ -1,7 +1,10 @@
 #include <iostream>
 #include <string>
 using namespace std;
+#define MAX 1000000 
+int cache[MAX] = {0,};
 
+/*
 int facto(int n){
 	int res=1;
 	for(int i=n; i>0; i--){
@@ -14,21 +17,19 @@ int comb(int n, int r){
 	if(r == 1) return n;
 	return facto(n) / (facto(n-r)*facto(r));
 }
+*/
+
+// A recurrence fomula is "D[n] = D[n-1] + D[n-2]"
 int solution(int n){
-	if(n == 1) return 1;
-	int res=0;	
-	int r = n/2;
-	if(n % 2 == 0){
-		n/=2;
+	if(n==1) return 1; // D[1] = 1
+	if(n==2) return 2; // D[2] = 2
+
+	if(cache[n] == 0){
+		return solution(n-1)+ solution(n-2);
 	}
 	else{
-		n = n/2 + 1;
+		return cache[n];
 	}
-	for(int i=r; i>=1; i--){
-		res += comb(n,i);
-		n++;
-	}
-	return res + 1; 
 }
 int main(int argc, char* argv[]){
 	int size;
