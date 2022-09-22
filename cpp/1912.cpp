@@ -3,28 +3,14 @@
 #define AND &&
 #define OR  ||
 using namespace std;
-int arr[MAX];
-int seqSize=0;
-int cache[MAX+1];
-int getMaxSeqNumber(int seqLength){ // 수열의 길이를 인자로 받는다.
-	int max = -1001; // 수열의 가장 최솟값
-	for(int i=0; i<seqSize; i++){
-		int res=0;
-		for(int j=0; j<seqLength; j++){
-			res = res + arr[i+j];
-			if(res > max) max = res;
-		}
-	}
-	return max;
-}
-int solution(){
-	// cache 배열은 수열의 연속된 길이의 따른 최댓값을 저장한 배열
-	for(int i=1; i<=seqSize; i++){
-		cache[i] = getMaxSeqNumber(i);
-	}
+int arr[MAX+1]; // original
+int solution(int n){
 	int max=-1001;
-	for(int i=1; i<=seqSize; i++){
-		if(max < cache[i]) max = cache[i];	
+	for(int i=1; i<=n; i++){
+		if(arr[i-1] > 0 AND arr[i] + arr[i-1] > 0){
+			arr[i]+=arr[i-1];
+		}
+		if(arr[i] > max) max = arr[i];
 	}
 	return max;
 }
@@ -32,10 +18,11 @@ int main(int argc, char* argv[]){
 	ios_base::sync_with_stdio(false);
 	cin.tie(nullptr);
 
+	int seqSize;
 	cin >> seqSize;
 	for(int i=0; i<seqSize; i++){
 		cin >> arr[i];
 	}
-	cout << solution() << "\n";
+	cout << solution(seqSize) << "\n";
 	return 0;
 }
