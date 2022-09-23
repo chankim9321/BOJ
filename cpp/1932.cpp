@@ -2,7 +2,6 @@
 #define AND &&
 #define OR ||
 using namespace std;
-// 수열의 합 
 int getMax(int a, int b){
 	return a > b ? a : b;
 }
@@ -56,12 +55,7 @@ int main(int argc, char* argv[]){
 		cin >> arr[i];
 	}
 
-	/*
 	cout << solution(arr, arrSize) << "\n";
-	for(int i=0; i<arrSize; i++){
-		cout << arr[i] << " - ";
-	}
-	*/
 	delete[] arr;
 	return 0;
 }
