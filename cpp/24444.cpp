@@ -18,12 +18,14 @@ void bfs(int start, Node ptr[], int size){
 	while(!q.empty()){
 		Node* vert = q.front();
 		q.pop();
-		if(!vert->isVisited){
+		if(!vert->isVisited){ 
 			vert->seq = seq++;
 			vert->isVisited = true;
 		}
 		for(int i=0; i<vert->link.size(); i++){
-			q.push(vert->link[i]);
+			if(!vert->link[i]->isVisited){
+				q.push(vert->link[i]);
+			}
 		}
 	}
 	for(int i=1; i<=size; i++){
@@ -43,11 +45,12 @@ int main(int argc, char* argv[]){
 		ptr[i].seq = 0;
 	}
 
-	for(int i=1; i<=vert; i++){
+	for(int i=1; i<=vert; i++){ // set node link
 		int from;
 		int to;
 		cin >> from >> to;
-		ptr[from].link.push_back(&ptr[to]); // 다른 노드의 주소를 벡터에 삽입
+		ptr[from].link.push_back(&ptr[to]); 
+		ptr[to].link.push_back(&ptr[from]);
 	}
 	for(int i=1; i<=vert; i++){
 		sort(ptr[i].link.begin(), ptr[i].link.end());
