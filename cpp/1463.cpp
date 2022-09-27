@@ -2,29 +2,24 @@
 #define AND &&
 #define OR ||
 using namespace std;
+int getMin(int a, int b){
+	return a < b ? a : b;
+}
 int solution(int number){
-	int callNumber=0;
-	do{
-		if(number % 2 != 0 AND number % 3 != 0){
-			number--;
-			callNumber++;
+	int *DP = new int[number+1];
+	DP[1] = 0;
+	DP[2] = 1;
+	DP[3] = 1;
+	for(int i=4; i<=number; i++){
+		DP[i] = DP[i-1] + 1;
+		if(i%2 == 0){
+			DP[i] = getMin(DP[i], DP[i/2] + 1);
 		}
-		else if(number % 3 != 0){
-			if( (number-1)/3 < (number/2)-1){  // D(n+2)의 결과 비교
-				number--;
-				callNumber++;
-			}
-			else{
-				number/=2;
-				callNumber++;
-			}
+		if(i%3 == 0){
+			DP[i] = getMin(DP[i], DP[i/3] + 1);
 		}
-		else{
-			number/=3;
-			callNumber++;
-		}
-	}while(number != 1);
-	return callNumber;
+	}
+	return DP[number];
 }
 int main(int argc, char* argv[]){
 	ios_base::sync_with_stdio(false);
