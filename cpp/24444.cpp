@@ -13,17 +13,16 @@ class Node{
 };
 void bfs(int start, Node ptr[], int size){
 	queue<Node*> q;
+	ptr[start].isVisited = true;
 	q.push(&ptr[start]);
 	int seq=1;
 	while(!q.empty()){
 		Node* vert = q.front();
 		q.pop();
-		if(!vert->isVisited){ 
-			vert->seq = seq++;
-			vert->isVisited = true;
-		}
+		vert->seq = seq++;
 		for(int i=0; i<vert->link.size(); i++){
 			if(!vert->link[i]->isVisited){
+				vert->link[i]->isVisited = true;
 				q.push(vert->link[i]);
 			}
 		}
@@ -45,7 +44,7 @@ int main(int argc, char* argv[]){
 		ptr[i].seq = 0;
 	}
 
-	for(int i=1; i<=vert; i++){ // set node link
+	for(int i=1; i<=edge; i++){ // set node link
 		int from;
 		int to;
 		cin >> from >> to;
