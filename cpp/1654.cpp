@@ -2,13 +2,13 @@
 #include <vector>
 
 using namespace std;
-int solution(int arr[], int needs, int wrans, int max){
-	int start = 0;
-	int end = max;
+long solution(long arr[], int needs, int wrans, long max){
+	long start = 0;
+	long end = max;
 	int result;
-	int mid;
+	long mid;
 	int slices;
-	int answer;
+	long answer;
 	while(start <= end){
 		result = 0;
 		mid = (start + end)/2;
@@ -32,8 +32,8 @@ int main(int argc, char* argv[]){
 	int needs;
 
 	cin >> wrans >> needs;
-	int *arr = new int[wrans];
-	int max = 0;
+	long *arr = new long[wrans];
+	long max = 0;
 	for(int i=0; i<wrans; i++){
 		cin >> arr[i];
 		if(arr[i] > max){
