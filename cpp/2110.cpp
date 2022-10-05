@@ -134,7 +134,7 @@ int main(int argc, char* argv[]){
 		element->is_installed = false;
 		v.push_back(element);
 	}
-	//sort(v.begin(), v.end()); // 오름차순으로 정렬
+	sort(v.begin(), v.end(), asce); // 오름차순으로 정렬
 	cout << solution(router, v) << '\n';
 	return 0;
 }
