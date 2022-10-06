@@ -33,6 +33,10 @@ int solution(Human arr[],int candidates,int interview_min, int document_min){
 				document_min = arr[i].document;
 			}
 		}
+		if(arr[i].document == arr[i].interview){ // 두 성적이 같을 때
+			if(document_min > arr[i].document) document_min = arr[i].document;
+			if(interview_min > arr[i].interview) interview_min = arr[i].interview;
+		}
 	}
 	return max_pass;
 }
