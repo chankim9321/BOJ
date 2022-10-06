@@ -14,29 +14,11 @@ bool cmp(Human a, Human b){	return a.document < b.document;}
 int solution(Human arr[],int candidates,int interview_min, int document_min){
 	int max_pass=0;
 	for(int i=0; i<candidates; i++){
-		int top_grade = getSmaller(arr[i].document, arr[i].interview); 	
-		if(top_grade == arr[i].document){ // 서류전형이 높은 등수일 때
-			if(top_grade == 1){ // 1등이면 무조건 통과
-				max_pass++;
-			}
-			else if(interview_min > arr[i].interview){ // 면접전형이 최소보다 작으면 통과
-				max_pass++;
-				interview_min = arr[i].interview; // 통과 최소점수 업데이트
-			}
+		if(interview_min > arr[i].interview || document_min > arr[i].document){
+			max_pass++;
 		}
-		else { // 면접전형이 높은 등수일 때
-			if(top_grade == 1){ // 1등이면 무조건 통과
-				max_pass++;
-			}
-			else if(document_min > arr[i].document){
-				max_pass++;
-				document_min = arr[i].document;
-			}
-		}
-		if(arr[i].document == arr[i].interview){ // 두 성적이 같을 때
-			if(document_min > arr[i].document) document_min = arr[i].document;
-			if(interview_min > arr[i].interview) interview_min = arr[i].interview;
-		}
+		interview_min = getSmaller(interview_min, arr[i].interview);
+		document_min = getSmaller(document_min, arr[i].document);
 	}
 	return max_pass;
 }
@@ -55,14 +37,15 @@ int main(int argc, char* argv[]){
 		Human* arr = new Human[candidates];	
 		for(int j=0; j<candidates; j++){ // init
 			cin >> arr[j].document >> arr[j].interview;	
-			if(arr[j].document == 1){
+			// 1등일때 나머지 성적을 최소만족 성적으로 등록
+			if(arr[j].document == 1){ 
 				interview_min = arr[j].interview;
 			}
 			if(arr[j].interview == 1){
 				document_min = arr[j].document;
 			}
 		}
-		sort(arr, arr+candidates,cmp);
+		sort(arr, arr+candidates,cmp); // 서류전형을 기준으로 정렬
 		#if DEBUG_MODE
 		cout << "--------------SORT-------------" << '\n';
 		for(int k=0; k<candidates; k++){
