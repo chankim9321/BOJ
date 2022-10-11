@@ -1,112 +1,37 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#include <cstdlib>
-#include <queue>
+#define DEBUG_MODE 0
 using namespace std;
 
-class Node{
-	public:
-		int number; // 노드 고유 ID
-		int dist; // 노드 X좌표
-};
-// binary search 이용 
-// 산정된 중간값에서 가장 가까운 노드의 좌표를 반환하는 함수.
-// 매개변수는 노드집합을 가지는 벡터와, 라우터 설치에 가장 적절한 X좌표를 받고,  최적 X좌표를 구할때 사용한 노드의 인덱스를 받는다.
-int getOpt(int a, int b, int c){
-	int min=a;
-	if(min > b){
-		min = b;
-		if(min > c){
-			min = c;
-		}
-	}
-	return min;
-}
-// 77번 라인에서 호출
-// 최적값에 가장 인접한 노드의 인덱스를 반환한다.
-int getClosest(vector<Node*> v, int opt_mid, int start_idx, int end_idx){ 
-	int mid_idx;
-	int res;
-	int answer;	
-	while(start_idx <= end_idx){
-		mid_idx = (end_idx + start_idx)/2; // 중간 인덱스
-		int mid_idx_dist = v[mid_idx]->dist;	 // 중간 인덱스의 좌표 값
-		res = opt_mid - mid_idx_dist; // 최적 중간값과 실제 중간 인덱스 값의 차이
-		if(start_idx == end_idx){
-			int a = abs(opt_mid - v[mid_idx-1]->dist);
-			int b = abs(opt_mid - v[mid_idx+1]->dist);
-			int c = abs(opt_mid - v[mid_idx]->dist);
-			int opt_dist = getOpt(a,b,c);
+int solution(int router, vector<int> v){
+	int ans=0;
+	int mid;
 
-			if(opt_dist == a) return mid_idx-1;
-			else if(opt_dist == b) return mid_idx+1;
-			else return mid_idx;
+	int start = v.front(); // minimum
+	int end = v.back(); 
+	
+	int installed;
+	int st;
+	while( start <= end ){
+		installed = 1;
+		mid = (start + end)/2;
+		st = v[0];
+		for(int i=1; i<v.size(); i++){
+			if( v[i] - st >= mid){
+				st = v[i];
+				installed++; 
+			}
 		}
-		else if(res > 0){ 
-			start_idx = mid_idx+1;
-			answer = mid_idx; // 일단 조건을 만족한 값부터 저장
-		}
-		else if(res < 0){ 
-			end_idx = mid_idx;
+		if(installed >= router){ 
+			ans = max(ans, mid);	
+			start = mid+1;
 		}
 		else{
-			return mid_idx;
+			end = mid-1;
 		}
 	}
-	return answer;
-}
-bool asce(Node* a, Node* b){
-	return a->dist < b->dist;
-}
-int solution(int router, vector<Node*> v){ // 라우터의 갯수와 노드벡터를 파라미터로 받는다
-	int answer;
-	int mid;
-	priority_queue<int> router_dist; // 우선순위 큐 선언, 라우터 간의 거리를 저장한다.
-	vector<Node*> router_installed; // 라우터가 설치된 노드를 저장하는 벡터
-
-	Node* start = (v.front()); // minimum
-	Node* end = (v.back()); // maximum
-
-	router_installed.push_back(start);
-	router_installed.push_back(end);
-	router -=2; // 양 끝에 라우터를 설치했으므로 -2개
-
-	int diff_dist = end->dist - start->dist; // 시작점 노드와 끝점 노드 사이의 거리. 이는 두 라우터사이의 최대 거리이다.
-	router_dist.push(diff_dist); // 힙에 삽입
-
-	while(router){ // 라우터가 다 없어질 떄 까지
-		mid = (start->dist + end->dist)/2; // 산정된 최적의 중간값
-		int closest_idx = getClosest(v, mid, start->number, end->number); // 최적의 중간값과 가장 인접한 노드의 인덱스를 반환받는다.
-
-		Node *new_ins = v[closest_idx]; // 벡터와 미드값 삽입, mid값과 가장 가까운 노드를 반환한다.
-		router--; // 라우터 갯수 감소
-
-		router_installed.push_back(new_ins); // 라우터가 설치된 노드를 저장하는 벡터에 삽입
-		sort(router_installed.begin(), router_installed.end(), asce);
-		// 라우터가 설치된 노드가 증가할 수록 라우터들간의 거리 정보는 한개씩 증가한다.
-		// 서로 인접한 노드간의 거리가 가장 큰 것을 찾아서 start 와 end 에 업데이트 한다.
-		int max_dist= -1;
-		for(int i=0; i<router_installed.size()-1; i++){
-			Node* second = router_installed[i+1];
-			Node* first = router_installed[i];
-			int dist = second->dist - first->dist;
-			if(max_dist < dist){
-				max_dist = dist;
-				// start, end 업데이트
-				start = first;
-				end = second;
-			}
-			router_dist.push(dist); // 노드들 간의 거리차이를 힙에 삽입한다.
-		}
-	}	
-	// 힙에서 가장 작은 값은, 공유기가 설치된 가장 인접한 노드간의 거리값이다.
-	int size = router_dist.size();	
-	for(int i=0; i<size; i++){
-		answer = router_dist.top();
-		router_dist.pop();
-	}
-	return answer;
+	return ans;
 }
 int main(int argc, char* argv[]){
 	ios_base::sync_with_stdio(false);
@@ -115,15 +40,20 @@ int main(int argc, char* argv[]){
 	int node;
 	int router;
 	cin >> node >> router;
-	vector<Node*> v; // 동적으로 생성한 노드를 저장하는 벡터
+	vector<int> v; // 동적으로 생성한 노드를 저장하는 벡터
 
 	for(int i=0; i<node; i++){ // init
-		Node* element = new Node;
-		cin >> element->dist;
-		element->number = i;
-		v.push_back(element);
+		int dist;
+		cin >> dist;
+		v.push_back(dist);
 	}
-	sort(v.begin(), v.end(), asce); // 오름차순으로 정렬
+	sort(v.begin(), v.end()); // 오름차순으로 정렬
+	#if DEBUG_MODE
+	cout << "\n after sort" << '\n';
+	for(int i=0; i<node; i++){
+		cout << v[i];
+	}
+	#endif
 	cout << solution(router, v) << '\n';
 	return 0;
 }
