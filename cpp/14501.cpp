@@ -18,7 +18,7 @@ int main(int argc, char* argv[]){
 		DP[i] = pay;
 	}
 //--------------------------------------------------
-	int ans=DP[1];
+	int ans=0;
 
 	for(int i=1; i<=days; i++){
 		int next_idx = v[i].first + i; // 현재로부터 다음 일정 가능까지 가능한 소요시간 이는 다음 스케줄의 인덱스를 의미한다.
