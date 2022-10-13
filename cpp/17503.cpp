@@ -2,28 +2,36 @@
 #include <vector>
 #include <algorithm>
 #include <queue>
-#define DEBUG_MODE 0
+#define DEBUG_MODE 1
 using namespace std;
 
 int N, M, K;
 int solution(vector<pair<int, int> >&v){
-	int start = 0; // 시작인덱스 ex) 0
-	int end = v.size()-1; // 끝 인덱스 ex) 4
+	int start = 0; // 시작인덱스
+	int end = v.size()-1; // 끝 인덱스 
 	int lastPreferCount;
 	int preferCount=0;
 	int degreeLevel=0;
+	// 현재 벡터는 도수레벨을 기준으로 오름차순 정렬되어 있음.
 	while(start <= end){
 		int mid = (start + end)/2; // 중간 인덱스 ex) 2
-		//cout << "산정된 인덱스값 = " << mid <<  ", 해당 인덱스값에 존재하는 도수레벨 = " << v[mid].second << '\n';
+		int level=-1;
+		cout << "산정된 인덱스값 = " << mid <<  ", 해당 인덱스값에 존재하는 도수레벨 = " << v[mid].second << '\n';
+		if(mid < N-1){ // 선정된 인덱스값이 마셔야 되는 술보다 작을경우
+			cout << N << "잔을 마실 수 없으므로 도수레벨을 좀 더 높입니다." << '\n';
+			start= mid+1;		
+			continue;
+		}
 		priority_queue<pair<int, int> > max_heap;
-		for(int i=0; i<= mid; i++){ 
+		for(int i=0; i<=mid; i++){ 
 			max_heap.push(v[i]); // 선정된 인덱스 아래로 모든 데이터를 삽입
 		}
-		for(int i=0; i<N; i++){
+		for(int i=0; i<N; i++){ // N개 만큼 선호도가 높은 순서대로 꺼낸다.
 			preferCount += max_heap.top().first;
+			
 			max_heap.pop();
 		}
-		//cout << "산정된 선호도의 합 = " << preferCount << '\n';
+		cout << "산정된 선호도의 합 = " << preferCount << ", 도수레벨 : " << v[mid].second << '\n';
 		if(preferCount >= M){ // 선호도의 합이 요구하는 총합 선호도보다 높을 때는 레벨을 줄일 필요가 있다.
 			end = mid-1;
 			degreeLevel = v[mid].second; // 현재 도수레벨 기록
@@ -62,6 +70,6 @@ int main(int argc, char* argv[]){
 		cout << "선호도 = " << beer_info[i].first << "  도수 레벨 = " << beer_info[i].second << '\n';
 	}
 	#endif
-	cout << solution(beer_info) << '\n';
+	cout << "정답: " << solution(beer_info) << '\n';
 	return 0;
 }
