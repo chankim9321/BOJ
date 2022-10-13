@@ -2,7 +2,7 @@
 #include <vector>
 #include <algorithm>
 #include <queue>
-#define DEBUG_MODE 1
+#define DEBUG_MODE 0
 using namespace std;
 
 int N, K;
@@ -10,15 +10,12 @@ long long M;
 int solution(vector<pair<long long, long long> >&v){
 	int start = 0; // 시작인덱스
 	int end = v.size()-1; // 끝 인덱스 
-	long long lastPreferCount;
 	long long preferCount=0;
-	long long degreeLevel=5000000000;
+	long long degreeLevel=1e13;
 	// 현재 벡터는 도수레벨을 기준으로 오름차순 정렬되어 있음.
 	while(start <= end){
-		int mid = (start + end)/2; // 중간 인덱스 ex) 2
-	//	cout << "산정된 인덱스값 = " << mid <<  ", 해당 인덱스값에 존재하는 도수레벨 = " << v[mid].second << '\n';
+		int mid = (start + end)/2; // 중간 인덱스
 		if(mid < N-1){ // 선정된 인덱스값이 마셔야 되는 술보다 작을경우
-		//	cout << N << "잔을 마실 수 없으므로 도수레벨을 좀 더 높입니다." << '\n';
 			start= mid+1;		
 			continue;
 		}
@@ -31,20 +28,16 @@ int solution(vector<pair<long long, long long> >&v){
 			max_heap.pop();
 		}
 		//cout << "산정된 선호도의 합 = " << preferCount << ", 도수레벨 : " << v[mid].second << '\n';
-		if(preferCount >= M){ // 선호도의 합이 요구하는 총합 선호도보다 높을 때는 레벨을 줄일 필요가 있다.
+		if(preferCount < M){ // 선호도의 합이 요구하는 총합 선호도보다 낮을 떄는 레벨을 올릴 필요가 있다.
+			start = mid+1;
+		}
+		else { // 선호도의 합이 요구하는 총합 선호도보다 높을 때는 레벨을 줄일 필요가 있다.
 			end = mid-1;
-			degreeLevel = v[mid].second; // 현재 도수레벨 기록
+			degreeLevel = min(degreeLevel, v[mid].second); // 현재 도수레벨 기록
 		}
-		else if(preferCount < M){ // 선호도의 합이 요구하는 총합 선호도보다 낮을 떄는 레벨을 올릴 필요가 있다.
-			start = mid+1; 
-		}
-		lastPreferCount = preferCount;
 		preferCount = 0; // 재 초기화
 	}
-	if(lastPreferCount < M){ // 총합 선호도가 아예 도달하지 못하면 -1을 출력
-		return -1;
-	}
-	return degreeLevel;
+	return (degreeLevel != 1e13 ? degreeLevel : -1);
 }
 bool sortByDegree(pair<long, long> a, pair<long, long> b){
 	return a.second < b.second;
