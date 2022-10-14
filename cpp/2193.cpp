@@ -8,12 +8,12 @@ int main(int argc, char* argv[]){
 	int size;
 	cin >> size;
 
-	int *dp = new int[size];
-	dp[0] = 1;
+	long long *dp = new long long[size+1];
 	dp[1] = 1;
-	for(int i=2; i<size; i++){
+	dp[2] = 1;
+	for(int i=3; i<=size; i++){
 		dp[i] =	 dp[i-1] + dp[i-2];
 	}
-	cout << dp[size-1] << '\n';
+	cout << dp[size] << '\n';
 	return 0;
 }
