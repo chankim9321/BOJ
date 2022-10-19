@@ -1,21 +1,17 @@
 #include <iostream>
+#include <algorithm>
 using namespace std;
-int getMax(int a, int b){
-	return a > b ? a : b;
-}
 int solution(int stairs, int arr[]){
 	int DP[stairs+1];
-	DP[1] = arr[1]; // 10
-	DP[2] = arr[2] + DP[1]; // 30
-	DP[3] = arr[3] + DP[1];  // 25
-	for(int i=4; i<=stairs; i++){
-		DP[i] = arr[i] + DP[i-1]; // 계단에서 1칸 올라왔을 때
-		if(DP[i-1] == DP[i-2] + arr[i-1]){ // 이전 연산에서 이미 1칸을 올라왔다면 연속해서 3칸을 이미 올라갈 수 없다.
-			DP[i] = arr[i] + DP[i-2]; // 따라서 두칸을 바로 올라가는 수 밖에 없다.
-		}
-		else{
-			DP[i] = getMax(arr[i] + DP[i-2], DP[i]); // 2칸 올라왔을 때 와 1칸 올라왔을 때 누적 비용을 비교
-		}
+	fill(DP,DP+stairs+1,0);
+	DP[1] = arr[1];
+	DP[2] = DP[1] + arr[2];
+	for(int i=3; i<=stairs; i++){
+		// 전자는 0 -> 2 -> 3
+		// 후자는 0 -> 1 -> 3
+		// 전자의 경우가 조금 복잡한데, 2번째 칸은 0 -> 2, 0 -> 1 -> 2 로 나뉜다.
+		// 전자가 더 크려면 0 -> 1 -> 2 순서가 이루어지면 3번째 계단은 밟지 못하므로 0 -> 2 순으로 이어져야 한다.
+		DP[i] = max(DP[i-3] + arr[i-1] + arr[i], DP[i-2] + arr[i]);
 	}
 	return DP[stairs];
 }
