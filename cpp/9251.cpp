@@ -5,22 +5,23 @@
 #define MAX 1001
 using namespace std;
 
-vector<vector<int> > memory(MAX, vector<int>(MAX, -1));
+vector<vector<int> > memory(MAX, vector<int>(MAX, 0));
 
 int LCS(string x, string y){
 	int a = x.size();
 	int b = y.size();
 
-	if(a == 0 || b == 0) return 0;
-	else{
-		if(x.back() == y.back()){
-			if(memory[a][b] != -1) return memory[a][b];
-			else return memory[a][b] = LCS(x.substr(0,a-1),y.substr(0,b-1)) + 1;
-		}
-		else{
-			return memory[a][b] = max(LCS(x,y.substr(0,y.size()-1)), LCS(x.substr(0,x.size()-1),y));
+	for(int i=1; i<=a; i++){
+		for(int j=1; j<=b; j++){
+			if(x[i-1] == y[j-1]){
+				memory[i][j] = memory[i-1][j-1]+1;
+			}
+			else{
+				memory[i][j] = max(memory[i-1][j], memory[i][j-1]);
+			}
 		}
 	}
+	return memory[a][b];
 }
 int main(int argc, char* argv[]){
 	ios_base::sync_with_stdio(false);
