@@ -28,6 +28,9 @@ int main(int argc, char* argv[]){
 	}
 	for(int i=3; i<=size; i++){
 		dp[i] =	max(dp[i-2] + drinks[i], dp[i-3] + drinks[i-1] + drinks[i]);
+		if(i>3){
+			dp[i] = max(dp[i], dp[i-4] + drinks[i] + drinks[i-1]);
+		}
 		opt_max = max(opt_max, dp[i]);
 	}
 	#if DEBUG_MODE
