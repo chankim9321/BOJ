@@ -19,6 +19,7 @@ int main(int argc, char* argv[]){
 		for(int j=1; j<10; j++){
 			memory[i][j] = memory[i][j-1] - memory[i-1][j-1];
 			dp[i] += memory[i][j];
+			dp[i] %= 10007;
 		}
 	}
 	cout << dp[size] << '\n';
