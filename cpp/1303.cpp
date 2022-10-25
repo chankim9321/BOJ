@@ -1,9 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include <cmath>
 #include <queue>
-#define DEBUG_MODE 1
 
 using namespace std;
 
@@ -34,7 +32,7 @@ int bfs(int x, int y){
 	}
 	return result*result;
 }
-pair<int, int> solution(int width, int height){
+pair<int, int> solution(int height, int width){
 	pair<int, int> result;
 	result.first = 0;
 	result.second = 0;
@@ -57,6 +55,9 @@ string getEmptyStr(int size){
 }
 
 int main(int argc, char* argv[]){
+	ios_base::sync_with_stdio(false);
+	cin.tie(nullptr);
+
 	int width, height;
 	cin >> height >> width;
 	cin.ignore(); // buffer clear
@@ -71,7 +72,7 @@ int main(int argc, char* argv[]){
 	}
 	field.push_back(getEmptyStr(width+2));	
 
-	pair<int, int> result = solution(width, height);
+	pair<int, int> result = solution(height, width);
 	cout << result.first << " " << result.second << '\n';
 	return 0;
 }
