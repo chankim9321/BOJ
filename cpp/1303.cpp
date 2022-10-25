@@ -59,7 +59,7 @@ int main(int argc, char* argv[]){
 	cin.tie(nullptr);
 
 	int width, height;
-	cin >> height >> width;
+	cin >> width >> height;
 	cin.ignore(); // buffer clear
 	
 	field.push_back(getEmptyStr(width+2));	
