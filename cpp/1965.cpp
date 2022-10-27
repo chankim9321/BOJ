@@ -23,10 +23,11 @@ int main(int argc, char* argv[]){
 		int k = i;
 		while(k>1){
 			if(arr[k-1] < arr[i]){
-				dp[i] = max(dp[i], dp[k-1]+1);
+				dp[i] = max(dp[i], dp[k-1]);
 			}
 			k--;
 		}
+		dp[i]++;
 		max_element = max(dp[i], max_element);
 	}
 	// result
