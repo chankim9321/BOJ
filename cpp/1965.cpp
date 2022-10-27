@@ -18,15 +18,14 @@ int main(int argc, char* argv[]){
 	int dp[size+1];
 	fill(dp, dp+size+1, 0);
 	dp[1] =	1;
-	int max_element = -1;
+	int max_element = 1;
 	for(int i=2; i<=size; i++){
 		int k = i;
 		while(k>1){
 			if(arr[k-1] < arr[i]){
-				dp[i] = dp[k-1] + 1;
-				break;
+				dp[i] = max(dp[i], dp[k-1]+1);
 			}
-			else k--;
+			k--;
 		}
 		max_element = max(dp[i], max_element);
 	}
