@@ -17,13 +17,12 @@ int main(int argc, char* argv[]){
 	for(int i=2; i<=size; i++){
 		for(int j=0; j<10; j++){
 			if(j == 0 || j == 9){
-				if(j == 0) memory[i][j] = memory[i-1][j+1];
-				else memory[i][j] = memory[i-1][j-1];
+				if(j == 0) memory[i][j] = (memory[i-1][j+1] % INF);
+				else memory[i][j] = (memory[i-1][j-1] % INF);
 			}
 			else {
-				memory[i][j] = memory[i-1][j-1] + memory[i-1][j+1];
+				memory[i][j] = (memory[i-1][j-1] + memory[i-1][j+1]) % INF;
 			}
-			memory[i][j] %= INF;
 		}
 	}
 	int result = 0;
