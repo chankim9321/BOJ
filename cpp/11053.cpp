@@ -14,11 +14,11 @@ int main(int argc, char* argv[]){
 		cin >> arr[i];
 	}
 	// solution
-	int *dp = new int(size);
+	int *dp = new int[size];
 	fill(dp, dp+size, 1);
 	int result = dp[0];
 	for(int i=1; i<size; i++){
-		for(int j=0; j<=i; j++){
+		for(int j=0; j<i; j++){
 			if(arr[i] > arr[j]){
 				dp[i] = max(dp[j]+1, dp[i]);
 			}
