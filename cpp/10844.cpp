@@ -29,9 +29,9 @@ int main(int argc, char* argv[]){
 	int result = 0;
 
 	for(int i=1; i<10; i++){
-		result += memory[size][i];
+		result = (result + memory[size][i]) % INF;
 	}
-	cout << result % INF << '\n';
+	cout << result << '\n';
 
 	return 0;
 }
