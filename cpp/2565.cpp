@@ -25,15 +25,14 @@ int main(int argc, char* argv[]){
 		seq.push_back(pole[i].second);	
 	}
 	int dp[size];	
-	fill_n(dp, size, 0);
+	fill_n(dp, size, 1);
 	int maximum = 1;
 	for(int i=1; i<size; i++){
 		for(int j=i-1; j>=0; j--){
 			if(seq[i] > seq[j]){
-				dp[i] = max(dp[i], dp[j]);
+				dp[i] = max(dp[i], dp[j] + 1);
 			}
 		}
-		dp[i]++;
 		maximum = max(dp[i], maximum);
 	}
 	cout << size - maximum << '\n';
