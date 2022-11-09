@@ -16,7 +16,7 @@ int main(int argc, char* argv[]){
 	int minLength=10e8;
 	for(int i=0; i<numOfLect; i++){
 		cin >> lect[i];
-		minLength = min(minLength, lect[i]);
+		minLength = max(minLength, lect[i]);
 		maxLength += lect[i];
 	}
 	while(minLength <= maxLength){
