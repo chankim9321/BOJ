@@ -12,7 +12,7 @@ int main(int argc, char* argv[]){
 	cin >> numOfLect >> numOfBr;
 
 	int lect[numOfLect];
-	int maxLength=0;
+	long long maxLength=0;
 	int minLength=10e8;
 	for(int i=0; i<numOfLect; i++){
 		cin >> lect[i];
@@ -20,8 +20,9 @@ int main(int argc, char* argv[]){
 		maxLength += lect[i];
 	}
 	while(minLength <= maxLength){
-		int mid = (minLength + maxLength)/2; // 선정된 블루레이의 길이
-		int count=0, sum=0;
+		long long mid = (minLength + maxLength)/2; // 선정된 블루레이의 길이
+		int count=0;
+		long long sum=0;
 		for(int i=0; i<numOfLect; i++){
 			if(sum + lect[i] > mid){
 				count++;
