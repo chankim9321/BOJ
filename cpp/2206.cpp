@@ -11,8 +11,8 @@ int main(int argc, char* argv[]){
 	fill_n(&visited[0][0][0], 1003*1003*2, 0);
 	int N, M;
 	scanf("%d %d", &N, &M);
-	int arr[N+2][M+2];
-	fill_n(&arr[0][0], (N+2)*(M+2), -1);
+	int arr[1003][1003];
+	fill_n(&arr[0][0], 1003*1003, -1);
 	for(int i=1; i<N+1; i++){
 		for(int j=1; j<M+1; j++){
 			scanf("%1d", &arr[i][j]);
@@ -20,7 +20,7 @@ int main(int argc, char* argv[]){
 	}
 	// solution
 	queue<pair<int, pair<int, int> > > q;
-	q.push(make_pair(1, make_pair(1, 0)));
+	q.push(make_pair(1, make_pair(1, 0))); // y 좌표 x 좌표 벽을 부쉈는지에 대한 여부
 	visited[1][1][0] = visited[1][1][1] = 1;
 	arr[1][1] = 1;
 	while(!q.empty()){
@@ -31,7 +31,6 @@ int main(int argc, char* argv[]){
 		for(int i=0; i<4; i++){
 			int next_x = x+dx[i];
 			int next_y = y+dy[i];
-			if(visited[next_y][next_x][crashed] == 1) continue; // 방문했다면 패스
 			// 맵상에서 벽, 한번도 부순적이 없으며, 방문하지 않은 곳
 			if(arr[next_y][next_x] == 1 && crashed == 0 && !visited[next_y][next_x][crashed+1]){
 				visited[next_y][next_x][crashed+1] = 1;
