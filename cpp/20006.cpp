@@ -2,22 +2,23 @@
 #include <vector>
 #include <queue>
 #include <algorithm>
+#include <string>
 
 using namespace std;
 
-bool sortByName(pair<int, char> &a, pair<int, char> &b){
+bool sortByName(pair<int, string> &a, pair<int, string> &b){
 	return (a.second < b.second);
 }
 int main(int argc, char* argv[]){
 	int players, rooms;
 	cin >> players >> rooms;
-	vector<pair<vector<pair<int, char> >, int > > roomList; // ( 방의 인원, 방 주인 레벨) 을 리스트로 저장
+	vector<pair<vector<pair<int, string> >, int > > roomList; // ( 방의 인원, 방 주인 레벨) 을 리스트로 저장
 
-	vector<pair<vector<pair<int, char> >, int> > ::iterator iter;
+	vector<pair<vector<pair<int, string> >, int> > ::iterator iter;
 	for(int i=0; i<players; i++){
 		bool is_entered = false;
 		int level;
-		char name;
+		string name;
 		cin >> level >> name;
 		for(iter=roomList.begin(); iter!=roomList.end(); iter++){
 			int levelRange = iter->second;
@@ -29,7 +30,7 @@ int main(int argc, char* argv[]){
 			}
 		}
 		if(!is_entered){ // 모든방을 뒤져서 들어가지 못했다면
-			vector<pair<int, char> > nv; // 방 생성
+			vector<pair<int, string> > nv; // 방 생성
 			nv.push_back({level, name}); // 방 인원 추가
 			roomList.push_back({nv, level}); // 생성된 방과 적정레벨을 방 목록에 추가
 		}
@@ -37,7 +38,7 @@ int main(int argc, char* argv[]){
 	// 출력부
 	for(iter = roomList.begin(); iter != roomList.end(); iter++){
 		int roomPlayerSize = iter->first.size();
-		vector<pair<int, char> > roomInfo(iter->first);
+		vector<pair<int, string> > roomInfo(iter->first);
 		sort(roomInfo.begin(), roomInfo.end(), sortByName); // 이름순으로 정렬
 		if(roomPlayerSize < rooms){
 			cout << "Waiting!\n";
@@ -49,6 +50,5 @@ int main(int argc, char* argv[]){
 			cout << roomInfo[j].first << " " << roomInfo[j].second << '\n';
 		}
 	}
-	
 	return 0;
 }
