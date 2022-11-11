@@ -2,13 +2,13 @@
 #include <cstdlib>
 using namespace std;
 
-int items[30];
+int items[31];
 int dp[31][15001]; // 추의 갯수와 모든 추를 이용한 나올수 있는 조합의 최대
 int weight;
 // beadWeight 를 0으로 만드는게 목적.
 // 즉, 추의 갯수를 변화시키면서 beadWeight 가 0인 값이 true가 되면 목적 달성.
 void sol(int seq, int beadWeight){
-	if(seq>weight || dp[seq][weight] == 1) return;	
+	if(seq>weight || dp[seq][beadWeight] == 1) return;	
 	dp[seq][beadWeight] = 1;
 	sol(seq+1, beadWeight + items[seq]); // 구슬 쟁반에 추를 추가하는 경우
 	sol(seq+1, abs(beadWeight - items[seq])); // 추 쟁반에 추를 추가하는 경우 --> 구슬 쟁반의 무게가 줄어든걸로 간주
