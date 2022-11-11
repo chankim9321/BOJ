@@ -1,6 +1,7 @@
 #include <iostream>
 #include <list>
 #include <queue>
+#include <algorithm>
 
 using namespace std;
 
@@ -28,7 +29,7 @@ int main(int argc, char* argv[]){
 		for(iter=roomList.begin(); iter!=roomList.end(); iter++){
 			int levelRange = iter->second;
 			int roomPlayerSize = iter->first.size();
-			if(levelRange + 10 >= level && levelRange - 10 <= level && roomPlayerSize < 5){ // 입력받은 레벨내 허용되는 방이 존재한다면
+			if(levelRange + 10 >= level && levelRange - 10 <= level && roomPlayerSize < rooms){ // 입력받은 레벨내 허용되는 방이 존재한다면
 				iter->first.push_back({level, name});	
 				is_success = true;
 				break;
