@@ -24,7 +24,6 @@ int main(int argc, char* argv[]){
 	int weightSum = 0; // 무게추의 합
 	for(int i=0; i<weight; i++){
 		cin >> items[i];
-		weightSum += items[i];
 	}
 	sol(0,0);
 	int beads;
