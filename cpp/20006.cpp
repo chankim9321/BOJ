@@ -1,5 +1,5 @@
 #include <iostream>
-#include <list>
+#include <vector>
 #include <queue>
 #include <algorithm>
 
@@ -11,9 +11,9 @@ bool sortByName(pair<int, char> &a, pair<int, char> &b){
 int main(int argc, char* argv[]){
 	int players, rooms;
 	cin >> players >> rooms;
-	list<pair<vector<pair<int, char> >, int > > roomList; // ( 방의 인원, 방 주인 레벨) 을 리스트로 저장
+	vector<pair<vector<pair<int, char> >, int > > roomList; // ( 방의 인원, 방 주인 레벨) 을 리스트로 저장
 
-	list<pair<vector<pair<int, char> >, int> > ::iterator iter;
+	vector<pair<vector<pair<int, char> >, int> > ::iterator iter;
 	for(int i=0; i<players; i++){
 		bool is_entered = false;
 		int level;
