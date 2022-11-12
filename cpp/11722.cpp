@@ -24,7 +24,7 @@ int main(int argc, char* argv[]){
 	dp[0] = 1;
 	int res = dp[0];
 	for(int i=1; i<size; i++){
-		for(int j=i; j>=0; j--){
+		for(int j=0; j<i; j++){
 			if(rsArr[i] > rsArr[j]){
 				dp[i] = max(dp[i], dp[j] +1);
 			}
