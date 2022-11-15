@@ -3,7 +3,7 @@
 using namespace std;
 #define INF 10000000
 
-int dp[10001];
+int dp[100001];
 int coins[101];
 int main(int argc, char* argv[]){
 	ios_base::sync_with_stdio(false);
