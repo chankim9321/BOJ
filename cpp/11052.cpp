@@ -16,7 +16,9 @@ int main(int argc, char* argv[]){
 	}
 
 	for(int i=2; i<=cards; i++){
-		dp[i] = max(max(dp[i], dp[i-1] + dp[1]), dp[i/2]*2);
+		for(int j = i-1; j>=i-j; j--){
+			dp[i] = max(dp[i], dp[j]+dp[i-j]);
+		}
 	}
 	cout << dp[cards] << '\n';
 
