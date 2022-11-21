@@ -11,7 +11,7 @@ int main(int argc, char* argv[]){
 	int arr[length+1];
 	arr[0] = 0;
 
-	int result=-1;
+	int result = -10e8;
 	for(int i=1; i<=length; i++){
 		int num;
 		cin >> num;
