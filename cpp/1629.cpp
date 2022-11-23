@@ -1,20 +1,22 @@
 #include <iostream>
-#include <cmath>
-#define MAX 2147483647;
 #define ll long long
 #define endl '\n';
 
 using namespace std;
 
-int A, B, C;
-ll sol(int A, int B){
+ll A, B, C;
+ll sol(ll A, ll B){
 	if(B==1) return A;
 	else{
 		ll res = sol(A, B/2);
+		res = res*res%C;
 		if(B % 2 == 0){
-			return res * res % C;
+			return res;
 		}
-		else return res * res * A % C;
+		else{ 
+			res = res*A%C;
+			return res;
+		}
 	}
 }
 int main(int argc, char* argv[]){
