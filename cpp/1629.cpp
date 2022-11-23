@@ -6,7 +6,7 @@ using namespace std;
 
 ll A, B, C;
 ll sol(ll A, ll B){
-	if(B==1) return A;
+	if(B==1) return A%C;
 	else{
 		ll res = sol(A, B/2);
 		res = res*res%C;
