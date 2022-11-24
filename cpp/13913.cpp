@@ -47,11 +47,21 @@ int main(int argc, char* argv[]){
 	fill_n(&cnt[0], 100001, 100001);
 	int subinPos, brotherPos;
 	cin >> subinPos >> brotherPos;
-	sol(subinPos, brotherPos);
-	cout << cnt[brotherPos] << '\n';
-	for(int i=0; i<road.size(); i++){
-		cout << road[i] << " ";
+	if(subinPos > brotherPos){ // 수빈의 포지션이 동생보다 앞선다면 뒤로 한칸씩 가는 수밖에 없음.
+		cout << subinPos - brotherPos << '\n';
+		for(int i=subinPos; i>=brotherPos; i--){
+			cout << i << " ";
+		}
+		cout << '\n';
+		return 0;
 	}
-	cout << '\n';
-	return 0;
+	else {
+		sol(subinPos, brotherPos);
+		cout << cnt[brotherPos] << '\n';
+		for(int i=0; i<road.size(); i++){
+			cout << road[i] << " ";
+		}
+		cout << '\n';
+		return 0;
+	}
 }
