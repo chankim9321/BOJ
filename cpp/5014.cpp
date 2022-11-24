@@ -4,22 +4,21 @@
 #include <algorithm>
 using namespace std;
 
-bool visited[1000001] = {false, };
-int cnt[1000001];
 int F,S,G,U,D;
 
-void sol(int next_pos[]){
+void sol(int next_pos[], int cnt[], bool visited[]){
 	queue<pair<int, int>> q;
 	q.push({S, 0});
+	visited[S] = true;
 	while(!q.empty()){
 		pair<int, int> present = q.front();
 		q.pop();
-		visited[present.first] = true;
 		cnt[present.first] = min(cnt[present.first], present.second); // update
 		for(int i=0; i<2; i++){
 			int next = present.first + next_pos[i];
 			if(next <= F && next > 0){
 				if(!visited[next]){
+					visited[next] = true;
 					q.push({next, present.second +1});
 				}
 			}
@@ -38,8 +37,11 @@ int main(int argc, char* argv[]){
 	cin >> F >> S >> G >> U >> D;
 	D = -D;
 	int next_pos[2] = {U, D};
-	fill_n(&cnt[0], 1000001, 1000001);
-	sol(next_pos);
+	int cnt[F+1];
+	bool visited[F+1];
+	fill_n(&cnt[0], F+1, 1000001);
+	fill_n(&visited[0], F+1, false);
+	sol(next_pos, cnt, visited);
 	if(cnt[G] != 1000001){
 		cout << cnt[G] << '\n';
 	}
