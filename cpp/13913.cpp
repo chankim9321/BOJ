@@ -6,6 +6,7 @@ using namespace std;
 
 int cnt[100001];
 int next_x[3] ={-1,1,2};
+bool visitedPos[100001] = { false, };
 vector<int> road(100000);
 
 void sol(int subinPos, int brotherPos){
@@ -18,6 +19,7 @@ void sol(int subinPos, int brotherPos){
 		q.pop();
 		cnt[present.first] = min(cnt[present.first], present.second);
 		visited.push_back(present.first);
+		visitedPos[present.first] = true;
 		if(present.first == brotherPos){ // 현재 위치가 동생이 있는 위치라면 지나온 길을 가장 짧은 것으로 업데이트
 			if(road.size() > visited.size()){
 				road = visited;
@@ -31,7 +33,7 @@ void sol(int subinPos, int brotherPos){
 			else{
 				nextPos = present.first + next_x[i];
 			}
-			if(nextPos < 100001 && cnt[nextPos] > present.second+1){
+			if(nextPos < 100001 && !visitedPos[nextPos]){
 				q.push({{nextPos, present.second+1}, visited});
 			}
 		}
