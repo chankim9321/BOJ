@@ -13,22 +13,22 @@ int roadTracker[100001] = {0,};
 void sol(int subinPos, int brotherPos){
 	queue<pair<int, int>> q;
 	q.push({subinPos, 0});
+	visitedPos[subinPos] = true;	
 	while(!q.empty()){
 		pair<int, int> present = q.front();
 		q.pop();
 		cnt[present.first] = min(cnt[present.first], present.second);
-		visitedPos[present.first] = true;	
 		for(int i=0; i<3; i++){
 			int nextPos;
 			if(i==2){
 				nextPos = present.first * next_x[i];
-				if(nextPos < 100001) roadTracker[nextPos] = present.first;
 			}
 			else{
 				nextPos = present.first + next_x[i];
-				if(nextPos < 100001) roadTracker[nextPos] = present.first;
 			}
 			if(nextPos < 100001 && !visitedPos[nextPos]){
+				visitedPos[nextPos] = true;
+				roadTracker[nextPos] = present.first;
 				q.push({nextPos, present.second+1});
 			}
 		}
@@ -52,7 +52,6 @@ int main(int argc, char* argv[]){
 	}
 	else {
 		sol(subinPos, brotherPos);
-		cout << cnt[brotherPos] << '\n';
 
 		stack<int> road;
 		int k=brotherPos;
@@ -61,7 +60,8 @@ int main(int argc, char* argv[]){
 			road.push(roadTracker[k]);
 			k = roadTracker[k];
 		}
-		road.push(k); // 수빈 위치
+
+		// print trackResult
 		while(!road.empty()){
 			cout << road.top() << " ";
 			road.pop();
