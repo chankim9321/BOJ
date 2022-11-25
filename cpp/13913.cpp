@@ -26,10 +26,12 @@ void sol(int subinPos, int brotherPos){
 			else{
 				nextPos = present.first + next_x[i];
 			}
-			if(nextPos < 100001 && !visitedPos[nextPos]){
-				visitedPos[nextPos] = true;
-				roadTracker[nextPos] = present.first;
-				q.push({nextPos, present.second+1});
+			if(nextPos < 100001){
+				if(!visitedPos[nextPos]){
+					visitedPos[nextPos] = true;
+					roadTracker[nextPos] = present.first;
+					q.push({nextPos, present.second+1});
+				}
 			}
 		}
 	}
