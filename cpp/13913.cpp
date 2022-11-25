@@ -3,14 +3,15 @@
 #include <vector>
 #include <algorithm>
 #include <stack>
+#define MAX 100001
 using namespace std;
 
-int cnt[100001];
+int cnt[MAX];
 int next_x[3] ={-1,1,2};
-bool visitedPos[100001] = { false, };
-int roadTracker[100001] = {0,};
+bool visitedPos[MAX] = { false, };
+int roadTracker[MAX] = {0,};
 
-void sol(int subinPos, int brotherPos){
+void sol(int subinPos){
 	queue<pair<int, int>> q;
 	q.push({subinPos, 0});
 	visitedPos[subinPos] = true;	
@@ -26,7 +27,7 @@ void sol(int subinPos, int brotherPos){
 			else{
 				nextPos = present.first + next_x[i];
 			}
-			if(nextPos < 100001){
+			if(nextPos < MAX && nextPos > -1){
 				if(!visitedPos[nextPos]){
 					visitedPos[nextPos] = true;
 					roadTracker[nextPos] = present.first;
@@ -41,7 +42,7 @@ int main(int argc, char* argv[]){
 	ios_base::sync_with_stdio(false); 
 	cin.tie(0);
 	cout.tie(0);
-	fill_n(&cnt[0], 100001, 100001);
+	fill_n(&cnt[0], MAX, MAX);
 	int subinPos, brotherPos;
 	cin >> subinPos >> brotherPos;
 	if(subinPos > brotherPos){ // 수빈의 포지션이 동생보다 앞선다면 뒤로 한칸씩 가는 수밖에 없음.
@@ -53,8 +54,10 @@ int main(int argc, char* argv[]){
 		return 0;
 	}
 	else {
-		sol(subinPos, brotherPos);
+		sol(subinPos);
 		cout << cnt[brotherPos] << '\n';
+
+		// tracking
 		stack<int> road;
 		int k=brotherPos;
 		road.push(k); // 동생위치
