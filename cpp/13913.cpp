@@ -52,7 +52,7 @@ int main(int argc, char* argv[]){
 	}
 	else {
 		sol(subinPos, brotherPos);
-
+		cout << cnt[brotherPos] << '\n';
 		stack<int> road;
 		int k=brotherPos;
 		road.push(k); // 동생위치
