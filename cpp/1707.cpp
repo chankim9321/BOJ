@@ -11,28 +11,37 @@ class Node{
 };
 // 자신과 인접한 노드는 전부 다른 팀에 속해있어야 한다.
 // team 1 = red, team 2 = blue, team 0 = nothing
-bool sol(Node vt[], bool visited[]){
+bool sol(Node vt[], bool visited[], int start, int vertex){
 	queue<Node*> q;
-	q.push(&vt[1]); // 1부터 스타트
-	vt[1].team = 1;
+	q.push(&vt[start]); 
+	vt[start].team = 1; 
 	while(!q.empty()){
 		Node *present = q.front();
 		visited[present->number] = true;
 		q.pop();
 		vector<Node*>::iterator iter;
 		for(iter = present->link.begin(); iter != present->link.end(); iter++){
-			if(!visited[(*iter)->number]){
-				if(present->team == (*iter)->team){ // 현재 팀과 링크에 등록된 노드들의 팀 컬러가 같다면 이분그래프가 아니다.
+			Node* next = (*iter);
+			if(!visited[next->number]){
+				if(present->team == next->team){ // 현재 팀과 링크에 등록된 노드들의 팀 컬러가 같다면 이분그래프가 아니다.
 					return false;
 				}
 				if(present->team == 1){ // 현재 노드가 red 팀이라면 다음 노드들은 blue가 되어야 함.
-					(*iter)->team = 2;
-					q.push(*iter);
+					next->team = 2;
+					q.push(next);
 				}
 				else{ // 현재노드가 blue 라면 다음 노드들은 red가 되어야 함.
-					(*iter)->team = 1;
-					q.push(*iter);
+					next->team = 1;
+					q.push(next);
 				}
+			}
+		}
+	}
+	// 연결 그래프가 아닐 수 있으므로 방문하지 않은 점들에 한에서 다시 sol을 호출
+	for(int i=1; i<=vertex; i++){
+		if(!visited[i]){
+			if(!sol(vt, visited, i, vertex)){
+				return false;
 			}
 		}
 	}
@@ -62,7 +71,7 @@ int main(int argc, char* argv[]){
 			vt[from].link.push_back(&vt[to]);	
 			vt[to].link.push_back(&vt[from]);
 		}
-		if(sol(vt, visited)) cout << "YES" << '\n';
+		if(sol(vt, visited, 1, vertex)) cout << "YES" << '\n';
 		else cout << "NO" << '\n';
 		delete[] vt;
 		delete[] visited;
