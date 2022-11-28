@@ -61,9 +61,10 @@ int main(int argc, char* argv[]){
 		cin >> vertex >> edge;
 		Node* vt = new Node[vertex+1];
 		bool *visited = new bool[vertex+1];
-		for(int j=1; j<=edge; j++){
+		for(int j=1; j<=vertex; j++){
 			vt[j].number = j;
 			vt[j].team = 0;
+			visited[j] = false;
 		}
 		for(int j=0; j<edge; j++){
 			int from, to;
