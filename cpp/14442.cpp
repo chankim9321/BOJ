@@ -26,17 +26,15 @@ int sol(){
 			int ny = y + dy[i];
 			int nx = x + dx[i];
 			if(nx >= 1 && ny >= 1 && ny <= height && nx <= width){
-				if(visited[ny][nx][wallBreak] == 0){ // 방문하지 않은 점 
-					if(map[ny][nx] == 1 && wallBreak != 0 ){ // 벽이 존재한다면 기회를 소모하고 벽을 부순뒤 방문
-						if(visited[ny][nx][wallBreak+1] == 0){ // 벽 부수기 이전의 자리가 이미 계산된 값이라면 큐에 삽입할 필요가 없음.
-							visited[ny][nx][wallBreak-1] = visited[y][x][wallBreak] +1;
-							q.push({{ny,nx},wallBreak-1});
-						}
+				if(map[ny][nx] == 1 && wallBreak != 0 ){ // 벽이 존재한다면 기회를 소모하고 벽을 부순뒤 방문
+					if(visited[ny][nx][wallBreak-1] == 0){ 
+						visited[ny][nx][wallBreak-1] = visited[y][x][wallBreak] +1;
+						q.push({{ny,nx},wallBreak-1});
 					}
-					if(map[ny][nx] == 0){ // 벽이 존재하지 않는다면 기회는 그대로
-						visited[ny][nx][wallBreak] = visited[y][x][wallBreak] +1;	
-						q.push({{ny,nx},wallBreak});
-					}
+				}
+				if(map[ny][nx] == 0 && visited[ny][nx][wallBreak] == 0){ // 벽이 존재하지 않는다면 기회는 그대로
+					visited[ny][nx][wallBreak] = visited[y][x][wallBreak] +1;	
+					q.push({{ny,nx},wallBreak});
 				}
 			}
 		}
