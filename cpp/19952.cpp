@@ -15,6 +15,7 @@ bool bfs(){
 	queue<tuple<int, int, int>> q; // 좌표값과 남은 힘
 	q.push(make_tuple(start_y, start_x, strength)); // 시작점
 	visited[start_y][start_x] = strength;
+	visited[end_y][end_x] = -1;
 	while(!q.empty()){
 		tuple<int, int, int> present = q.front();
 		q.pop();
@@ -22,28 +23,29 @@ bool bfs(){
 		int x = get<1>(present);
 		int str = get<2>(present);
 		int l = map[y][x]; // 현재칸 높이
-		if(str == 0) break; // 힘이 다하면 앞으로 나아가지 못한다.
-		for(int i=0; i<4; i++){
-			int ny = y + dy[i];
-			int nx = x + dx[i];
-			int nextL = map[ny][nx]; // 장애물 높이
-			if(ny > 0 && nx > 0 && ny <= height && nx <= width){
-				if(visited[ny][nx] < str-1){
-					if(nextL <= l) { // 다음 장애물의 높이가 현재 높이보다 낮거나 같은 경우
-						visited[ny][nx] = str-1;
-						q.push(make_tuple(ny,nx,str-1));	
-					}
-					else{ // 다음 장애물의 높이가 큰 경우
-						if((nextL - l) <= str){ // 점프해야 할 높이보다 힘이 많다면 이동가능.
+		if(str > 0){ // 힘이 남아있을때 이동 가능
+			for(int i=0; i<4; i++){
+				int ny = y + dy[i];
+				int nx = x + dx[i];
+				int nextL = map[ny][nx]; // 장애물 높이
+				if(ny > 0 && nx > 0 && ny <= height && nx <= width){
+					if(visited[ny][nx] < str-1){ // 이전의 방문했던 점이 더 많은 힘을 가지고 있는 경우라면 방문필요 x
+						if(nextL <= l) { // 다음 장애물의 높이가 현재 높이보다 낮거나 같은 경우
 							visited[ny][nx] = str-1;
-							q.push(make_tuple(ny,nx,str-1));
+							q.push(make_tuple(ny,nx,str-1));	
+						}
+						else{ // 다음 장애물의 높이가 큰 경우
+							if((nextL - l) <= str){ // 점프해야 할 높이보다 힘이 많다면 이동가능.
+								visited[ny][nx] = str-1;
+								q.push(make_tuple(ny,nx,str-1));
+							}
 						}
 					}
 				}
 			}
 		}
 	}
-	if(visited[end_y][end_x] != 0) return true;
+	if(visited[end_y][end_x] != -1) return true;
 	else return false;
 }
 int main(int argc, char* argv[]){
