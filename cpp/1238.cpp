@@ -7,9 +7,10 @@ using namespace std;
 
 
 int n, m, dest;
-vector<pair<int, int>> edge[1001];
-int getShortestPath(int start, int dst){
-	int dist[n+1];	
+vector<pair<int, int>> pathEdge[1001];
+vector<pair<int, int>> revsEdge[1001];
+int* getShortestPath(int start, vector<pair<int, int>> edge[] ){
+	int* dist = new int[n+1];
 	fill_n(&dist[0], n+1, INF);
 	dist[start] = 0;
 	priority_queue<pair<int, int>> pq;
@@ -28,7 +29,7 @@ int getShortestPath(int start, int dst){
 			}
 		}
 	}
-	return dist[dst];
+	return dist;
 }
 int main(int argc, char* argv[]){
 	ios_base::sync_with_stdio(false);
@@ -39,23 +40,12 @@ int main(int argc, char* argv[]){
 	for(int i=0; i<m; i++){
 		int from, to, weight;
 		cin >> from >> to >> weight;
-		edge[from].push_back({to, weight});
+		pathEdge[from].push_back({to, weight});
+		revsEdge[to].push_back({from, weight});
 	}
-	int pathToDest[n+1];
-	for(int i=1; i<=n; i++){
-		if(i == dest){
-			pathToDest[i] = 0;
-		}
-		else pathToDest[i] = getShortestPath(i, dest);
-	}
-	int pathFromDest[n+1];
-	for(int i=1; i<=n; i++){
-		if(i == dest){
-			pathFromDest[i] = 0;	
-		}
-		else pathFromDest[i] = getShortestPath(dest, i);	
-	}
-		int res = -1;
+	int* pathToDest = getShortestPath(2, revsEdge);
+	int* pathFromDest = getShortestPath(2, pathEdge);
+	int res = -1;
 	for(int i=1; i<=n; i++){
 		res = max(res, pathToDest[i] + pathFromDest[i]);
 	}
