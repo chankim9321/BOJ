@@ -5,7 +5,6 @@
 #define INF 10e8
 using namespace std;
 
-
 int n, m, dest;
 vector<pair<int, int>> pathEdge[1001];
 vector<pair<int, int>> revsEdge[1001];
@@ -43,9 +42,10 @@ int main(int argc, char* argv[]){
 		pathEdge[from].push_back({to, weight});
 		revsEdge[to].push_back({from, weight});
 	}
-	int* pathToDest = getShortestPath(2, revsEdge);
-	int* pathFromDest = getShortestPath(2, pathEdge);
-	int res = -1;
+	int* pathToDest = getShortestPath(dest, revsEdge);
+	int* pathFromDest = getShortestPath(dest, pathEdge);
+
+	int res = 0;
 	for(int i=1; i<=n; i++){
 		res = max(res, pathToDest[i] + pathFromDest[i]);
 	}
