@@ -1,7 +1,8 @@
 #include <iostream>
+#include <algorithm>
 #include <vector>
 #define INF 10e7
-
+#define DEBUG_MODE 0
 using namespace std;
 
 int main(int argc, char* argv[]){
@@ -11,15 +12,19 @@ int main(int argc, char* argv[]){
 
 	int n,k;
 	cin >> n >> k;
-	bool visited[11] = {false,};
+	vector<int> p;
 	vector<vector<int>> planet(n, vector<int> (n,INF));
 	for(int i=0; i<n; i++){
+		if(i != k){
+			p.push_back(i);
+		}
 		for(int j=0; j<n; j++){
 			int fee;
 			cin >> fee;
 			planet[i][j] = fee;
 		}
 	}
+	// 플로이드 워셜 알고리즘
 	for(int k=0; k<n; k++){
 		for(int i=0; i<n; i++){
 			for(int j=0; j<n; j++){
@@ -29,29 +34,24 @@ int main(int argc, char* argv[]){
 			}
 		}
 	}
+	#ifndef DEBUG_MODE
 	for(int i=0; i<n; i++){
 		for(int j=0; j<n; j++){
 			cout << planet[i][j] << " ";
 		}
 		cout << '\n';
 	}
-
-	int res=0;
-	while(!visited[k]){
-		visited[k] = true;
-		int next;
-		int mini = 10000;
-		for(int i=0; i<n; i++){
-			if(planet[k][i] != 0 && !visited[i]){
-				if(planet[k][i] < mini){
-					next = i;
-					mini = planet[k][i];
-				}
-			}
+	#endif
+	int res = 10e8;
+	do{
+		int s = k;
+		int fare=0;
+		for(auto it = p.begin(); it != p.end(); it++){
+			fare += planet[s][*it];
+			s = *it;
 		}
-		k = next;
-		res += mini;
-	}
-	cout << res-10000 << '\n';
+		res = min(res, fare);
+	}while(next_permutation(p.begin(), p.end()));
+	cout << res << '\n';
 	return 0;
 }
