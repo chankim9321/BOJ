@@ -8,19 +8,17 @@ int n,m;
 int minTime=10e8;
 int dx[] = {0,0,1,-1};
 int dy[] = {1,-1,0,0};
-
+vector<pair<int, int>> virusPos;
 void bfs(vector<vector<int>> &map){
 	bool visited[n][n];
 	fill_n(&visited[0][0], n*n, false);
 	queue<pair<int,	int>> q;
 	queue<pair<int, int>> next;
-	for(int i=0; i<n; i++){
-		for(int j=0; j<n; j++){
-			if(map[i][j] == -1){
-				q.push({i,j});
-				visited[i][j] = true;
-			}
-		}
+	for(int i=0; i<virusPos.size(); i++){
+		int y = virusPos[i].first;
+		int x = virusPos[i].second;
+		q.push(virusPos[i]);
+		visited[y][x] = true;	
 	}
 	int cycle = 0;
 	while(!q.empty()){
@@ -53,18 +51,17 @@ void bfs(vector<vector<int>> &map){
 	}
 	minTime = min(minTime, cycle-1);
 }
-void searchAllCase(vector<vector<int>> &map, int virus){
+bool selection[10];
+void searchCombination(vector<vector<int>> &map, int virus, int idx, vector<pair<int, int>> &virusRoom){
 	if(virus == 0){
 		return bfs(map);
 	}
-	for(int i=0; i<n; i++){
-		for(int j=0; j<n; j++){
-			if(map[i][j] == 2){
-				map[i][j] = -1; // 바이러스 살포
-				searchAllCase(map, virus-1);
-				map[i][j] = 2;
-			}
-		}
+	for(int i=idx; i<virusRoom.size(); i++){
+		if(selection[i] == true) continue;
+		virusPos.push_back(virusRoom[i]);	
+		searchCombination(map, virus-1, idx, virusRoom);
+		virusPos.pop_back();
+		selection[i] = false;
 	}
 }
 int main(int argc, char* argv[]){
@@ -74,14 +71,16 @@ int main(int argc, char* argv[]){
 
 	cin >> n >> m;
 	vector<vector<int>> map(n, vector<int> (n,0));
+	vector<pair<int, int>> virusRoom;
 	for(int i=0; i<n; i++){
 		for(int j=0; j<n; j++){
 			int state;
 			cin >> state;
 			map[i][j] = state;
+			if(state == 2) virusRoom.push_back({i,j});
 		}
 	}
-	searchAllCase(map, m);
+	searchCombination(map, m, 0, virusRoom);
 	if(minTime == 10e8) cout << -1 << '\n';
 	else cout << minTime << '\n';
 	return 0;
