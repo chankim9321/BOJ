@@ -58,6 +58,7 @@ void searchCombination(vector<vector<int>> &map, int virus, int idx, vector<pair
 	}
 	for(int i=idx; i<virusRoom.size(); i++){
 		if(selection[i] == true) continue;
+		selection[i] = true;
 		virusPos.push_back(virusRoom[i]);	
 		searchCombination(map, virus-1, idx, virusRoom);
 		virusPos.pop_back();
