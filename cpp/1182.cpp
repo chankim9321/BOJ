@@ -6,7 +6,7 @@ int n, s;
 int result = 0;
 bool visited[20];
 void sol(int arr[], int depth, int value){
-	if(value == s && depth != 0){
+	if(value == s){
 		result++;
 	}
 	for(int i=depth; i<n; i++){
@@ -28,5 +28,6 @@ int main(int argc, char* argv[]){
 		cin >> arr[i];
 	}
 	sol(arr, 0, 0);
-	cout << result << '\n';
+	if(s == 0) cout << result -1 << '\n';
+	else cout << result << '\n';
 }
