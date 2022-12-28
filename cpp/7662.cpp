@@ -47,13 +47,18 @@ int main(int argc, char* argv[]){
 				cin >> data;
 				maxHeap.push(data);
 				minHeap.push(-data);
-				m.insert({data, true});
+				if(m.find(data) != m.end()){
+					m.insert({data, true});
+				}
+				else{
+					m[data] = true;
+				}
 			}
 		}
 		while(!m[maxHeap.top()] && !maxHeap.empty()){
 			maxHeap.pop();
 		}
-		while(!m[minHeap.top()] && !minHeap.empty()){
+		while(!m[-minHeap.top()] && !minHeap.empty()){
 			minHeap.pop();
 		}
 		if(!maxHeap.empty() && !minHeap.empty()){
