@@ -14,9 +14,9 @@ int main(int argc, char* argv[]){
 	for(int i=0; i<k; i++){
 		int t;
 		cin >> t;
-		priority_queue<int> maxHeap;
-		priority_queue<int> minHeap;
-		map<int, int> m;
+		priority_queue<long long> maxHeap;
+		priority_queue<long long> minHeap;
+		map<long long, long long> m;
 		for(int j=0; j<t; j++){
 			char command;
 			cin >> command;
@@ -44,7 +44,7 @@ int main(int argc, char* argv[]){
 				}
 			}
 			else if(command == 'I'){
-				int data;
+				long long data;
 				cin >> data;
 				maxHeap.push(data);
 				minHeap.push(-data);
