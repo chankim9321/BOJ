@@ -16,7 +16,7 @@ int main(int argc, char* argv[]){
 		cin >> t;
 		priority_queue<int> maxHeap;
 		priority_queue<int> minHeap;
-		map<int, bool> m;
+		map<int, int> m;
 		for(int j=0; j<t; j++){
 			char command;
 			cin >> command;
@@ -24,21 +24,21 @@ int main(int argc, char* argv[]){
 				int select;
 				cin >> select;
 				if(select == 1){ // 최대힙에서 제거	
-					while(!maxHeap.empty() && !m[maxHeap.top()]){ // 이미 최소힙에서 삭제된 값이라면
+					while(!maxHeap.empty() && m[maxHeap.top()] == 0){ // 이미 최소힙에서 삭제된 값이라면
 						maxHeap.pop(); // 제거
 					}
 					if(!maxHeap.empty()){
-						m[maxHeap.top()] = false; // 제거한 값은 항상 false
+						m[maxHeap.top()]--; // 제거한 값은 항상 false
 						maxHeap.pop();
 					}
 				}
 				else if(select == -1){ // 최소힙에서 제거
-					while(!minHeap.empty() && !m[-minHeap.top()]){
+					while(!minHeap.empty() && m[-minHeap.top()] == 0){
 						minHeap.pop();
 						if(minHeap.empty()) break;
 					}
 					if(!minHeap.empty()){
-						m[-minHeap.top()] = false;
+						m[-minHeap.top()]--;
 						minHeap.pop();
 					}
 				}
@@ -48,18 +48,18 @@ int main(int argc, char* argv[]){
 				cin >> data;
 				maxHeap.push(data);
 				minHeap.push(-data);
-				if(m.find(data) != m.end()){
-					m.insert({data, true});
+				if(m.find(data) == m.end()){
+					m.insert({data, 1});
 				}
 				else{
-					m[data] = true;
+					m[data]++;
 				}
 			}
 		}
-		while(!maxHeap.empty() && !m[maxHeap.top()]){
+		while(!maxHeap.empty() && m[maxHeap.top()] == 0){
 			maxHeap.pop();
 		}
-		while(!minHeap.empty() && !m[-minHeap.top()]){
+		while(!minHeap.empty() && m[-minHeap.top()] == 0){
 			minHeap.pop();
 		}
 		if(!maxHeap.empty() && !minHeap.empty()){
