@@ -26,6 +26,7 @@ int main(int argc, char* argv[]){
 				if(select == 1){ // 최대힙에서 제거	
 					while(!m[maxHeap.top()] && !maxHeap.empty()){ // 이미 최소힙에서 삭제된 값이라면
 						maxHeap.pop(); // 제거
+						if(maxHeap.empty()) break;
 					}
 					if(!maxHeap.empty()){
 						m[maxHeap.top()] = false; // 제거한 값은 항상 false
@@ -35,6 +36,7 @@ int main(int argc, char* argv[]){
 				else if(select == -1){ // 최소힙에서 제거
 					while(!m[-minHeap.top()] && !minHeap.empty()){
 						minHeap.pop();
+						if(minHeap.empty()) break;
 					}
 					if(!minHeap.empty()){
 						m[-minHeap.top()] = false;
@@ -57,9 +59,11 @@ int main(int argc, char* argv[]){
 		}
 		while(!m[maxHeap.top()] && !maxHeap.empty()){
 			maxHeap.pop();
+			if(maxHeap.empty()) break;
 		}
 		while(!m[-minHeap.top()] && !minHeap.empty()){
 			minHeap.pop();
+			if(minHeap.empty()) break;
 		}
 		if(!maxHeap.empty() && !minHeap.empty()){
 			cout << maxHeap.top() << " " << -minHeap.top() << '\n';
