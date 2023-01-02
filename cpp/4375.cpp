@@ -7,21 +7,17 @@ int main(int argc, char* argv[]){
 	while(!cin.eof()){
 		int n;
 		cin >> n;
-		if(n == 1) {
-			cout << 1 << '\n';
-			continue;
-		}
-		int cipher = 2;
 		int answer;
-		unsigned long long int k = 1;
+		int k = 1;
+		int cipher = 1;
 		while(1){
-			k =	k*10 +1; 	 
 			if(k % n == 0){
 				answer = cipher;
 				break;
 			}
 			else{ // n으로 모듈러 연산이 이루어 지지 않을 때
-				k = k%n;
+				k =	k*10 +1; 	 
+				k %= n;
 				cipher++;			
 			}
 		}
