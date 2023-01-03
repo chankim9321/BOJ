@@ -6,7 +6,7 @@ using namespace std;
 
 bool checkPalindromeAvailable(map<char, int>& alphabet){
 	int oddNumber = 0;
-	for(char ch = 'a'; ch <= 'z'; ch++){
+	for(char ch = 'A'; ch <= 'Z'; ch++){
 		if(alphabet[ch] % 2 != 0){
 			oddNumber++;
 		}
@@ -24,7 +24,7 @@ string multiplyString(char ch, int multiplier){
 string getPalindrome(map<char, int>& alphabet){
 	string halfStr; // will be reversed
 	char lastChar;
-	for(char ch = 'a'; ch <= 'z'; ch++){
+	for(char ch = 'A'; ch <= 'Z'; ch++){
 		if(alphabet[ch] > 0){
 			if(alphabet[ch] % 2 != 0){
 				lastChar = ch;
@@ -38,7 +38,7 @@ string getPalindrome(map<char, int>& alphabet){
 }
 int main(int argc, char* argv[]){
 	map<char, int> alphabet;
-	for(char ch = 'a'; ch <= 'z'; ch++){
+	for(char ch = 'A'; ch <= 'Z'; ch++){
 		alphabet[ch] = 0;
 	}
 	string input;
