@@ -23,18 +23,18 @@ string multiplyString(char ch, int multiplier){
 }
 string getPalindrome(map<char, int>& alphabet){
 	string halfStr; // will be reversed
-	char lastChar;
+	string middleChar = "";
 	for(char ch = 'A'; ch <= 'Z'; ch++){
 		if(alphabet[ch] > 0){
 			if(alphabet[ch] % 2 != 0){
-				lastChar = ch;
+				middleChar += ch;
 			}
 			halfStr += multiplyString(ch, (alphabet[ch]/2));
 		}
 	}
 	string halfTmpStr = halfStr;
 	reverse(halfStr.begin(), halfStr.end());
-	return (halfTmpStr + lastChar + halfStr);
+	return (halfTmpStr + middleChar + halfStr);
 }
 int main(int argc, char* argv[]){
 	map<char, int> alphabet;
