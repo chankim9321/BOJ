@@ -26,6 +26,10 @@ int main(int argc, char* argv[]){
 	for(int i=0; i<ts; i++){
 		int dress;
 		cin >> dress;
+		if(dress == 0){
+			cout << 0 << '\n';
+			continue;
+		}
 		map<string, vector<string>> clothes;
 		for(int j=0; j<dress; j++){
 			string name, type;
