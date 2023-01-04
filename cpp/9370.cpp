@@ -33,7 +33,7 @@ vector<int> getShortestPath(int start, vector<vector<int>>& path){
 		int currentDist = -pq.top().second;
 		pq.pop();
 		if(dist[current] < currentDist) continue;
-		for(int i=1; i<=path[current].size(); i++){
+		for(int i=1; i<path[current].size(); i++){
 			if(path[current][i] == INF) continue;
 			int next = i;
 			int nextDist = path[current][i];
@@ -68,8 +68,8 @@ int main(int argc, char* argv[]){
 //		cout << '\n';
 		vector<int>	scFromPassedFrom = getShortestPath(passedFrom, path); // 냄새가 시작되는 곳2
 
-		int scToPassedFrom = scFromStart[passedFrom]; // start 에서 냄새가 시작되는 곳 까지의 거리값
-		int scToPassedTo = scFromStart[passedTo];
+		int scToPassedFrom = scFromStart[passedFrom]; // start 에서 냄새가 시작되는 곳 까지의 거리값1
+		int scToPassedTo = scFromStart[passedTo]; // start 에서 냄새가 시작되는 곳 까지의 거리값2
 		int passedWeight = path[passedFrom][passedTo]; // 냄새가 나는 거리의 비용
 		vector<int> destCd;
 		vector<int> result;
@@ -86,8 +86,8 @@ int main(int argc, char* argv[]){
 			}
 		}
 		sort(result.begin(), result.end());
-		for(const auto& dst : result){
-			cout << dst << " ";
+		for(int i=0; i<result.size(); i++){
+			cout << result[i] << " ";
 		}
 		cout << '\n';
 	}
