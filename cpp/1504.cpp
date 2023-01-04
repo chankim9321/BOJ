@@ -2,13 +2,15 @@
 #include <queue>
 #include <vector>
 #include <algorithm>
-#define INF 10e9
+#define INF 10e8
 using namespace std;
 
 int v, e;
-int getShortestPath(int start, int end, vector<pair<int, int>> path[]){
+int* getShortestPath(int start, vector<pair<int, int>> path[]){
 	int *dist = new int[v+1];
-	fill_n(&dist[0], v+1, INF);
+	for(int i=1; i<=v; i++){
+		dist[i] = INF;
+	}
 	dist[start] = 0;
 	priority_queue<pair<int, int>> pq;
 	pq.push({start, 0});
@@ -16,6 +18,7 @@ int getShortestPath(int start, int end, vector<pair<int, int>> path[]){
 		int current = pq.top().first;
 		int currentDist = -pq.top().second;
 		pq.pop();
+		if(dist[current] < currentDist) continue;
 		for(int i=0; i<path[current].size(); i++){
 			int next = path[current][i].first;
 			int nextDist = currentDist + path[current][i].second;
@@ -25,9 +28,7 @@ int getShortestPath(int start, int end, vector<pair<int, int>> path[]){
 			}
 		}
 	}
-	int result = dist[end];
-	delete[] dist;
-	return result;
+	return dist;
 }
 int main(int argc, char* argv[]){
 	ios_base::sync_with_stdio(false);
@@ -44,11 +45,11 @@ int main(int argc, char* argv[]){
 		path[to].push_back({from, weight});
 	}
 	cin >> v1 >> v2;
-	int toV1 = getShortestPath(1, v1, path);
-	int toV2 = getShortestPath(v1, v2, path);
-	int toEnd = getShortestPath(v2, v, path);
-	int result = toV1 + toV2 + toEnd;
-	if(result > INF) cout << -1 << '\n';
+	int* path1 = getShortestPath(1, path);
+	int* path2_1 = getShortestPath(v1, path);
+	int* path2_2 = getShortestPath(v2, path);
+	int result = min(path1[v1] + path2_1[v2] + path2_2[v], path1[v2] + path2_2[v1] + path2_1[v]);
+	if(result >= INF || result < 0) cout << -1 << '\n'; // 오버플로우 발생한 경우
 	else cout << result << '\n';
 	return 0;
 }
