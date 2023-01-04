@@ -47,6 +47,8 @@ int main(int argc, char* argv[]){
 	int toV1 = getShortestPath(1, v1, path);
 	int toV2 = getShortestPath(v1, v2, path);
 	int toEnd = getShortestPath(v2, v, path);
-	cout << toV1 + toV2 + toEnd << '\n';
+	int result = toV1 + toV2 + toEnd;
+	if(result > INF) cout << -1 << '\n';
+	else cout << result << '\n';
 	return 0;
 }
