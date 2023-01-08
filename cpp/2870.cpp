@@ -3,7 +3,7 @@
 #include <vector>
 #include <algorithm>
 using namespace std;
-vector<int> result;
+vector<string> result;
 void parseStr(string input){
 	input += " ";
 	string parsed = "";
@@ -14,7 +14,7 @@ void parseStr(string input){
 				while(parsed[0] == '0' && parsed.length() > 1){
 					parsed.erase(0,1);
 				}
-				result.push_back(stoi(parsed));
+				result.push_back(parsed);
 			}
 		}
 		else{
