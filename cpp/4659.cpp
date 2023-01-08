@@ -8,14 +8,10 @@ bool isVowel(char ch){
 bool ruleCheck(string input){
 	int vowelCnt = 0; // 모음 카운팅
 	int consonantCnt = 0; // 자음 카운팅
-	bool vowelCheck; // 모음 포함 여부
+	bool vowelExist = false; // 모음 포함 여부
 	char preChar;
 	for(int i = 0; i<input.length(); i++){
 		if(isVowel(input[i])){ // 모음 검사
-			if(vowelCnt == 2){ // 모음 연속성 검사
-				return false;
-			}
-			vowelCnt++;
 			if(i>0){ // 같은 글자 연속성 체크
 				if((preChar == 'e' && input[i] == 'e') || (preChar == 'o' && input[i] == 'o')){
 
@@ -24,22 +20,21 @@ bool ruleCheck(string input){
 					return false;
 				}
 			}
+			vowelCnt++;
 			consonantCnt = 0;
-			vowelCheck = true;
+			vowelExist = true;
 		}
 		else{ // 자음 검사
-			if(consonantCnt == 2){ // 자음 연속성 검사
-				return false;
-			}
 			if(i > 0 && (preChar == input[i])){
 				return false;
 			}
 			consonantCnt++;
 			vowelCnt = 0;
 		}
+		if(consonantCnt == 3 || vowelCnt == 3) return false;
 		preChar = input[i];
 	}
-	if(vowelCheck) return true;
+	if(vowelExist) return true;
 	else return false;
 }
 int main(int argc, char* argv[]){
