@@ -7,7 +7,7 @@ vector<int> result;
 void parseStr(string input){
 	input += " ";
 	string parsed = "";
-	for(int i=0; i<input.length(); i++){
+	for(int i=0; i<input.length()-1; i++){
 		if(input[i] >= '0' && input[i] <= '9'){
 			parsed += input[i];
 			if(input[i+1] < '0' || input[i+1] > '9'){
