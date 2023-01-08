@@ -4,6 +4,12 @@
 #include <algorithm>
 using namespace std;
 vector<string> result;
+bool cmp(const string s1, const string s2){
+	if(s1.length() != s2.length()){
+		return s1.length() < s2.length();
+	}
+	else return s1.compare(s2) < 0;
+}
 void parseStr(string input){
 	input += " ";
 	string parsed = "";
@@ -34,7 +40,7 @@ int main(int argc, char* argv[]){
 		cin >> input;
 		parseStr(input);
 	}
-	sort(result.begin(), result.end());
+	sort(result.begin(), result.end(), cmp);
 	for(auto i : result){
 		cout << i << '\n';
 	}
