@@ -3,31 +3,29 @@
 #include <vector>
 #include <algorithm>
 using namespace std;
-int visited[500001];
+int visited[2][500001];
 void bfs(int subin, int sister){
-	queue<int> q;
-	q.push(subin);	
-	visited[subin] = 0;
+	queue<pair<int, int>> q;
+	q.push({subin, 0});	
+	fill_n(&visited[0][0], 2*500001, -1);
 	while(!q.empty()){
-		int current = q.front();
+		int current = q.front().first;
+		int time = q.front().second; 
 		q.pop();
-		for(int i=0; i<3; i++){
-			int next;
-			if(i == 0) next = current + 1;
-			else if(i == 1) next = current - 1;
-			else next = current * 2;	
-			if(next > 500000 || next < 0 ) continue;
-			if(visited[current] + 1 < visited[next]){
-				visited[next] = visited[current] + 1;	
-				q.push(next);
-			}
-		}
+
+		if(current > 500000 || current < 0 ) continue;
+		if(visited[time%2][current] != -1) continue;
+
+		visited[time%2][current] = time;
+		q.push({current+1, time+1});
+		q.push({current-1, time+1});
+		q.push({current*2, time+1});
 	}
 	bool flag = false;
 	for(int i=0; i<=500000; i++){
 		int nextSis = sister + (i*(i+1))/2;
 		if(nextSis > 500000) break;
-		if(visited[nextSis] != 500001 && visited[nextSis] <= i){
+		if(visited[i%2][nextSis] != -1 && visited[i%2][nextSis] <= i){
 			cout << i << '\n';
 			flag = true;
 			break;
@@ -40,7 +38,6 @@ void bfs(int subin, int sister){
 int main(int argc, char* argv[]){
 	int subin, sister;
 	cin >> subin >> sister;	
-	fill_n(&visited[0], 500001, 500001);
 	bfs(subin, sister);
 	return 0;
 }
