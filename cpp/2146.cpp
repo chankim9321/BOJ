@@ -71,7 +71,13 @@ int bfs(){
 			int nx = x + dx[i];
 			if(ny >= n || nx >= n || nx < 0 || ny < 0) continue; // 범위벗어날시 cancel
 			if(visited[ny][nx] && map[ny][nx].second != map[y][x].second){ // 만난 지역번호가 서로 다르고 이미 다리가 건설된 경우
-				minimum = min(minimum, abs(map[ny][nx].first + map[y][x].first));
+				if(map[ny][nx].first == 1){
+					minimum = min(minimum, abs(map[y][x].first));
+				}
+				else if(map[y][x].first == 1){
+					minimum = min(minimum, abs(map[ny][nx].first));
+				}
+				else minimum = min(minimum, abs(map[ny][nx].first + map[y][x].first));
 				continue;
 			}
 			if(visited[ny][nx]) continue;
@@ -105,7 +111,6 @@ int main(int argc, char* argv[]){
 	fill_n(&visited[0][0], 101*101, false);
 	init();
 	setAreaNumber();
-	if(n == 2) cout << 1 << '\n';
-	else cout << bfs() << '\n';
+	cout << bfs() << '\n';
 	return 0;
 }
