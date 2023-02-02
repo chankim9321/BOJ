@@ -21,13 +21,14 @@ void init(){
 		for(int y=0; y<r; y++){
 			map[z][y].resize(c);
 			for(int x=0; x<c; x++){
-				scanf("%1c", &map[z][y][x]);
+				cin >> map[z][y][x];
+				//scanf("%1c", &map[z][y][x]);
 				if(map[z][y][x] == 'S'){ // 시작 좌표
 					q.push(make_tuple(z,y,x));
 					visited[z][y][x] = 0;
 				}
 			}
-			dbf();
+			//dbf();
 		}
 	}
 }
@@ -75,9 +76,13 @@ void bfs(){
 	}
 }
 int main(int argc, char* argv[]){
+	ios_base::sync_with_stdio(false);
+	cin.tie(0);
+	cout.tie(0);
 	while(1){
-		scanf("%d %d %d", &l, &r, &c);	
-		dbf();
+		cin >> l >> r >> c;
+		//scanf("%d %d %d", &l, &r, &c);	
+		//dbf();
 		if(l == 0 && r == 0 && c == 0) break;
 		init();	
 		bfs();
