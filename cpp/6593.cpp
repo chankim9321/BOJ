@@ -62,7 +62,7 @@ void bfs(){
 		cout << "Trapped!\n";
 	}
 	else{
-		cout << "Escaped in " << answer <<  " minutes(s).\n";
+		cout << "Escaped in " << answer <<  " minute(s).\n";
 	}
 	while(!q.empty()){
 		q.pop();
