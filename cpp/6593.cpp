@@ -4,31 +4,24 @@
 #include <algorithm>
 using namespace std;
 int visited[31][31][31];
-vector<vector<vector<char>>> map;
+char map[31][31][31];
 int dz[] = {1,-1,0,0,0,0};
 int dy[] = {0,0,1,-1,0,0};
 int dx[] = {0,0,0,0,1,-1};
 int l,r,c;
 queue<tuple<int, int, int>> q;
-void dbf(){
-	while(getchar() != '\n');
-}
 void init(){
 	fill_n(&visited[0][0][0], 31*31*31, -1);
-	map.resize(l);	
+	fill_n(&map[0][0][0], 31*31*31, ' ');
 	for(int z=0; z<l; z++){
-		map[z].resize(r);
 		for(int y=0; y<r; y++){
-			map[z][y].resize(c);
 			for(int x=0; x<c; x++){
 				cin >> map[z][y][x];
-				//scanf("%1c", &map[z][y][x]);
 				if(map[z][y][x] == 'S'){ // 시작 좌표
 					q.push(make_tuple(z,y,x));
 					visited[z][y][x] = 0;
 				}
 			}
-			//dbf();
 		}
 	}
 }
@@ -36,11 +29,11 @@ void printMap(){
 	for(int z=0; z<l; z++){
 		for(int y=0; y<r; y++){
 			for(int x=0; x<c; x++){
-				printf("%c",map[z][y][x]);
+				cout << map[z][y][x];
 			}
-			printf("\n");
+			cout << '\n';
 		}
-		printf("--------------------------------\n");
+		cout << "------------------------------\n";
 	}
 }
 void bfs(){
@@ -66,10 +59,10 @@ void bfs(){
 		}
 	}
 	if(answer == 10e8){
-		printf("Trapped!\n");
+		cout << "Trapped!\n";
 	}
 	else{
-		printf("Escaped in %d minutes(s).\n", answer);
+		cout << "Escaped in " << answer <<  " minutes(s).\n";
 	}
 	while(!q.empty()){
 		q.pop();
@@ -81,8 +74,6 @@ int main(int argc, char* argv[]){
 	cout.tie(0);
 	while(1){
 		cin >> l >> r >> c;
-		//scanf("%d %d %d", &l, &r, &c);	
-		//dbf();
 		if(l == 0 && r == 0 && c == 0) break;
 		init();	
 		bfs();
