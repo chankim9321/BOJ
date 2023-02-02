@@ -10,7 +10,6 @@ int dy[] = {0,0,1,-1,0,0};
 int dx[] = {0,0,0,0,1,-1};
 int l,r,c;
 queue<tuple<int, int, int>> q;
-int wayout[3];
 void dbf(){
 	while(getchar() != '\n');
 }
@@ -26,11 +25,6 @@ void init(){
 				if(map[z][y][x] == 'S'){ // 시작 좌표
 					q.push(make_tuple(z,y,x));
 					visited[z][y][x] = 0;
-				}
-				else if(map[z][y][x] == 'E'){ // 출구 좌표
-					wayout[0] = z;
-					wayout[1] = y;
-					wayout[2] = x;
 				}
 			}
 			dbf();
@@ -55,8 +49,9 @@ void bfs(){
 		int y = get<1>(q.front());
 		int x = get<2>(q.front());
 		q.pop();
-		if(z == wayout[0] && y == wayout[1] && x == wayout[2]){
+		if(map[z][y][x] == 'E'){
 			answer = min(answer, visited[z][y][x]);	
+			break;
 		}
 		for(int i=0; i<6; i++){
 			int nz = z + dz[i];
@@ -74,6 +69,9 @@ void bfs(){
 	}
 	else{
 		printf("Escaped in %d minutes(s).\n", answer);
+	}
+	while(!q.empty()){
+		q.pop();
 	}
 }
 int main(int argc, char* argv[]){
