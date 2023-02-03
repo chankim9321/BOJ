@@ -52,11 +52,12 @@ void bfs(){
 			if(map[ny][nx] == 1){ // 벽일 때
 				if(ch > 0){ // 찬스가 있을 때
 					if(dayState == 0){ // 낮일 때
+						if(visited[dayState+1][ch-1][ny][nx] != -1) continue;
 						visited[dayState+1][ch-1][ny][nx] = visited[dayState][ch][y][x] + 1;
 						q.push(make_tuple(dayState + 1, ch - 1, ny, nx));
 					}
 					else{ // 밤일 때
-						//visited[dayState][chance][y][x]++;
+						if(visited[dayState-1][ch][y][x] != -1) continue;
 						visited[dayState-1][ch][y][x] = visited[dayState][ch][y][x] + 1;
 						q.push(make_tuple(dayState - 1, ch, y, x)); // 제자리에서 비용만 증가하고 다시 낮으로
 					}
