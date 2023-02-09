@@ -51,7 +51,8 @@ void kruskal(){
 			setUnion(from, to);
 		}
 	}
-	cout << result << '\n';
+	if(result == 0) cout << -1 << '\n';
+	else cout << result << '\n';
 }
 int main(int argc, char* argv[]){
 	ios_base::sync_with_stdio(false);
