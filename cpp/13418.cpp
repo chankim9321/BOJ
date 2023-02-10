@@ -55,15 +55,15 @@ int kruskal(){
 void sol(){
 	sort(v.begin(), v.end(), sortDescByWeight);
 	int bestCase = kruskal();
-	bestCase = path - bestCase; // 지나온 길 - 내리막 길의 갯수(1)
+	bestCase = path - bestCase; // 지나온 길 - 내리막 길의 갯수(1) = 오르막의 갯수
 	for(int i=0; i<=vert; i++){
 		parent[i] = i;
 	}
 	path = 0;
 	sort(v.begin(), v.end());
 	int worstCase = kruskal();
-	worstCase = path - worstCase; // 지나온 길 - 내리막 길의 갯수(1)
-	cout << (worstCase * worstCase) - bestCase << '\n';
+	worstCase = path - worstCase; // 지나온 길 - 내리막 길의 갯수(1) = 오르막의 갯수
+	cout << (worstCase * worstCase) - (bestCase * bestCase) << '\n';
 }
 int main(int argc, char* argv[]){
 	ios_base::sync_with_stdio(false);
