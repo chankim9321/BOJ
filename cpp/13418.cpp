@@ -6,6 +6,7 @@ using namespace std;
 int vert, edge;
 vector<pair<int, pair<int, int>>> v;
 vector<int> parent;
+int path = 0;
 void init(){
 	cin >> vert >> edge;
 	parent.resize(vert+1);
@@ -46,19 +47,23 @@ int kruskal(){
 		if(!hasCycle(from, to)){
 			setUnion(from, to);
 			weightSum += weight;
+			path++;
 		}
 	}
 	return weightSum;
 }
 void sol(){
 	sort(v.begin(), v.end(), sortDescByWeight);
-	int worstCase =	kruskal();
+	int bestCase = kruskal();
+	bestCase = path - bestCase; // 지나온 길 - 내리막 길의 갯수(1)
 	for(int i=0; i<=vert; i++){
 		parent[i] = i;
 	}
+	path = 0;
 	sort(v.begin(), v.end());
-	int bestCase = kruskal();
-	cout << worstCase * worstCase - bestCase << '\n';
+	int worstCase = kruskal();
+	worstCase = path - worstCase; // 지나온 길 - 내리막 길의 갯수(1)
+	cout << (worstCase * worstCase) - bestCase << '\n';
 }
 int main(int argc, char* argv[]){
 	ios_base::sync_with_stdio(false);
