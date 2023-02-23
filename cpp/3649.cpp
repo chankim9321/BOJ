@@ -6,8 +6,8 @@ using namespace std;
 
 int holeWidth, lego;
 vector<int> legos;
-vector<pair<int, int>> result;
 void sol(){
+	vector<pair<int, int>> result;
 	sort(legos.begin(), legos.end());
 	for(int i=0; i<legos.size(); i++){
 		cout << legos[i] << " ";
@@ -40,6 +40,7 @@ void sol(){
 		}
 		cout << "yes " << answer_1 << " " << answer_2 << '\n';
 	}
+	legos.resize(0);	
 }
 int main(int argc, char* argv[]){
 	ios_base::sync_with_stdio(false);
