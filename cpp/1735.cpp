@@ -33,6 +33,7 @@ void sol(){
 	while(divisor != 1){
 		numer /= divisor;		
 		deco /= divisor;
+		divisor = getGcd(numer, deco);
 	}
 	cout << numer << " " << deco << '\n';
 	return;
