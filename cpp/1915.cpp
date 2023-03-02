@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <string>
 using namespace std;
 
 vector<vector<int>> v;
@@ -52,8 +53,26 @@ void sol(){
 }
 int main(int argc, char* argv[]){
 	
-	init();
-	sol();
-
+	// 내가 푼 코드
+	//init();
+	//sol();
+	
+	// 최적화 코드
+	ios_base::sync_with_stdio(false);	
+	cin.tie(0);
+	cout.tie(0);
+	int dp[1001][1001];
+	int r, c;
+	cin >> r >> c;
+	int area;
+	for(int i=1; i<= r; i++){
+		string s; 
+		cin >> s;
+		for(int j=1; j<=c; j++){
+			if(s[j-1] == '1') dp[i][j] = min({ dp[i-1][j], dp[i][j-1], dp[i-1][j-1]}) + 1;
+			area = max(dp[i][j], area);
+		}
+	}
+	cout << area * area << '\n';
 	return 0;
 }
