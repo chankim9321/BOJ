@@ -29,15 +29,15 @@ void sol(){
 			for(int j = 0; j + sqSize < m; j++){
 				int area = v[i][j];
 				if(area == 0) continue;
-				if(area != v[i + sqSize][j]){
+				if(area != v[i + 1][j]){
 					v[i][j] = 0;
 					continue;
 				}
-				if(area != v[i][j + sqSize]){
+				if(area != v[i][j + 1]){
 					v[i][j] = 0;
 					continue;
 				}
-				if(area != v[i + sqSize][j + sqSize]){
+				if(area != v[i + 1][j + 1]){
 					v[i][j] = 0;
 					continue;
 				}
