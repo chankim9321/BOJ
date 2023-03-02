@@ -11,6 +11,7 @@ void dbf(){ while(getchar() != '\n'); }
 void init(){
 	cin >> n;
 	board.resize(n+1, vector<char> (n+1, ' '));
+	dbf();
 	for(int i=1; i<=n; i++){
 		for(int j=1; j<=n; j++){
 			scanf("%1c", &board[i][j]);
@@ -63,7 +64,7 @@ void sol() {
 	int waist;
 	for(int i=1; i<=n; i++){
 		for(int j=1; j<=n; j++){
-			if(board[i][j] == '*' && board[i-1][j] == '*' && board[i][j+1] == '*' && board[i][j-1] == '*'){
+			if(board[i][j] == '*' && board[i-1][j] == '*' && board[i][j+1] == '*' && board[i][j-1] == '*' && board[i+1][j] == '*'){
 				heart = {i,j};
 				rightArm = find({i, j+1}, 0, 1);		
 				leftArm = find({i, j-1}, 0, 2);
