@@ -4,6 +4,7 @@
 #include <string>
 using namespace std;
 
+/*
 vector<vector<int>> v;
 int n, m;
 int sqSize = 0;
@@ -51,6 +52,7 @@ void sol(){
 	}
 	printf("%d\n", answer* answer);
 }
+*/
 int main(int argc, char* argv[]){
 	
 	// 내가 푼 코드
@@ -61,7 +63,9 @@ int main(int argc, char* argv[]){
 	ios_base::sync_with_stdio(false);	
 	cin.tie(0);
 	cout.tie(0);
+
 	int dp[1001][1001];
+	fill_n(&dp[0][0], 1001*1001, 0);
 	int r, c;
 	cin >> r >> c;
 	int area;
