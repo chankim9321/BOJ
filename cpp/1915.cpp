@@ -8,7 +8,7 @@ int n, m;
 int sqSize = 0;
 
 void init(){
-	cin >> n >> m;	
+	scanf("%d %d",&n, &m);
 	v.resize(n, vector<int>(m, -1));
 	for(int i=0; i<n; i++){
 		for(int j=0; j<m; j++){
@@ -20,7 +20,7 @@ void init(){
 void sol(){
 	int answer = 1;
 	if(sqSize == 0){
-		cout << 0 << '\n';
+		printf("0\n");
 		return;
 	}
 	while(sqSize < n && sqSize < m){
@@ -48,7 +48,7 @@ void sol(){
 		if(is_exist) answer++;
 		sqSize++;
 	}
-	cout << answer * answer << '\n';
+	printf("%d\n", answer* answer);
 }
 int main(int argc, char* argv[]){
 	
