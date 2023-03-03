@@ -6,20 +6,18 @@
 using namespace std;
 
 int n, m;
-int minHeight = MAX_HEIGHT, maxHeight = -1;
+ll minHeight = 0, maxHeight = -1;
 vector<int> trees;
 void init(){
 	cin >> n >> m;
 	trees.resize(n);
 	for(int i=0; i<n; i++){
 		cin >> trees[i];
-		minHeight = min(trees[i], minHeight);	
-		maxHeight = max(trees[i], maxHeight);
+		maxHeight = max(trees[i], (int)maxHeight);
 	}
 }
 void sol(){
-	ll answer = 0;
-	ll diff = MAX_HEIGHT;
+	ll answer = MAX_HEIGHT;
 	while(minHeight < maxHeight){
 		ll sawHeight = (minHeight + maxHeight)/2;
 		ll timbers = 0;
@@ -30,10 +28,7 @@ void sol(){
 		}
 		if(timbers > m){ // 자른 목재가 요구사항보다 많을 때
 			minHeight = sawHeight + 1;
-			if(diff > timbers - m){
-				diff = timbers - m;
-				answer = sawHeight;
-			}
+			answer = min(sawHeight, answer);
 		}
 		else if(timbers < m){
 			maxHeight = sawHeight;
