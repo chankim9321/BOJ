@@ -13,7 +13,7 @@ int main(int argc, char* argv[]){
 	double all = 0;
 	while(1){
 		string tree;
-		if(getline(cin, tree)){
+		if(!getline(cin, tree)){
 			for(auto i = dict.begin(); i != dict.end(); i++){
 				double percent = (i->second * 100) / all;
 				cout << fixed;

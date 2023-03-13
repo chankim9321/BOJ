@@ -13,7 +13,7 @@ int main(int argc, char* argv[]){
 
 	int lect[numOfLect];
 	long long maxLength=0;
-	int minLength=10e8;
+	int minLength=0;
 	for(int i=0; i<numOfLect; i++){
 		cin >> lect[i];
 		minLength = max(minLength, lect[i]);

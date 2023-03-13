@@ -1,6 +1,5 @@
 #include <iostream>
 using namespace std;
-bool dupliCheck[9] = {false, };
 int res[9] = {0,};
 int N,M;
 
@@ -10,7 +9,7 @@ void printArr(){
 	}
 	cout << '\n';
 }
-void sol(int depth){
+void sol(int depth, bool dupliCheck[]){
 	if(M == depth) {
 		printArr();
 		return;
@@ -19,7 +18,7 @@ void sol(int depth){
 		if(!dupliCheck[i]){
 			dupliCheck[i] = true;
 			res[depth] = i;
-			sol(depth+1);
+			sol(depth+1, dupliCheck);
 			dupliCheck[i] = false;
 		}
 	}
@@ -31,6 +30,7 @@ int main(int argc, char *argv[]){
 
 	cin >> N >> M;
 
-	sol(0);
+	bool dupliCheck[9] = {false, };
+	sol(0, dupliCheck);
 	return 0;
 }

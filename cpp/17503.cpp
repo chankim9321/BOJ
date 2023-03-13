@@ -27,7 +27,6 @@ int solution(vector<pair<long long, long long> >&v){
 			preferCount += max_heap.top().first;
 			max_heap.pop();
 		}
-		//cout << "산정된 선호도의 합 = " << preferCount << ", 도수레벨 : " << v[mid].second << '\n';
 		if(preferCount < M){ // 선호도의 합이 요구하는 총합 선호도보다 낮을 떄는 레벨을 올릴 필요가 있다.
 			start = mid+1;
 		}

@@ -11,12 +11,14 @@ int main(int argc, char* argv[]){
 	int *dp = new int[size+1];
 	fill(dp, dp+size+1, 0);
 	vector<int> drinks;
+
 	drinks.push_back(0);
 	for(int i=0; i<size; i++){ // init
 		int wine;
 		cin >> wine;
 		drinks.push_back(wine);
 	}
+
 	if(size < 2){
 		dp[1] = drinks[1];
 		opt_max = dp[1];

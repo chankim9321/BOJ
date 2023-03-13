@@ -11,7 +11,7 @@ int main(int argc, char* argv[]){
 	//init
 	int item, weightLimit;
 	cin >> item >> weightLimit;
-	vector<pair<int, int> > items;
+	vector<pair<int, int>> items;
 	items.push_back(make_pair(0, 0)); // dummy items
 	for(int i=0; i<item; i++){
 		int weight, value;
@@ -25,30 +25,21 @@ int main(int argc, char* argv[]){
 	// 정답값은 DP[item][weightLimit] 에 존재한다. 
 	
 	int DP[item+1][weightLimit+1];
-	fill(DP[0], DP[0]+(item+1)*(weightLimit+1), 0);
-	/*
-	for(int i=0; i<=weightLimit; i++){
-		cout << DP[0][i] << " - ";
-	}
-	cout << '\n';
-	*/
+	fill_n(&DP[0][0], (item+1)*(weightLimit+1), 0);
 	for(int i=1; i<=item; i++){ // 아이템이 1개 이상인 상태부터 시작
-		//cout << DP[i][0] << " - ";
 		for(int j=1; j<=weightLimit; j++){ // 아이템의 갯수가 정해졌을 떄, 무게한도 1이상 부터 시작
 			int preBag = DP[i-1][j]; // 이전 싸이클의 가방 내용 (무게가 그대로인 경우)
 			int itemValue = items[i].second;
 			int itemWeight = items[i].first;
-			if(j < itemWeight){ // 현재 무게한도가 새로운 아이템의 무게보다 낮은 경우는 아이템을 넣을 수 없으므로
-				DP[i][j] = preBag;
+			if(j < itemWeight){ // 짐을 못 넣는다 --> 이전짐의 값을 넣는다
+				DP[i][j] = preBag
 			}
-			else{	
-				int preItem = DP[i-1][j-itemWeight];
-				int newBag = preItem + itemValue;
+			else{ // 현재 짐을 넣을 수 있다
+				int preItem = DP[i-1][j-itemWeight]; 
+				int newBag = preItem + itemValue; // 현재짐 + 이전 짐
 				DP[i][j] = max(preBag, newBag);	
 			}
-			//cout << DP[i][j] << " - ";
 		}
-		//cout << '\n';
 	}
 	cout << DP[item][weightLimit] << '\n';
 

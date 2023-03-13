@@ -55,17 +55,7 @@ int main(int argc, char* argv[]){
 	for(int i=0; i<tc; i++){
 		vector<vector<int>> path = initPath();
 		vector<int> scFromStart = getShortestPath(start, path); // start 에서부터의 최단경로
-		
-//		for(int i=1; i<scFromStart.size(); i++){
-//			cout << scFromStart[i] << " ";
-//		}
-//		cout << '\n';
-		// 냄새가 시작되는 곳은 두가지로 나뉨.
 		vector<int>	scFromPassedTo = getShortestPath(passedTo, path); // 냄새가 시작되는 곳1
-//		for(int i=1; i<scFromPassedTo.size(); i++){
-//			cout << scFromPassedTo[i] << " ";
-//		}
-//		cout << '\n';
 		vector<int>	scFromPassedFrom = getShortestPath(passedFrom, path); // 냄새가 시작되는 곳2
 
 		int scToPassedFrom = scFromStart[passedFrom]; // start 에서 냄새가 시작되는 곳 까지의 거리값1

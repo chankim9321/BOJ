@@ -11,8 +11,8 @@ int main(int argc, char* argv[]){
 	cout.tie(nullptr);
 
 	//init
-	int scSize;
-	int hwSize;
+	int scSize; // 숏컷 사이즈
+	int hwSize; // 고속도로 사이즈
 	cin >> scSize >> hwSize;
 
 	vector<pair<int, int> > sc[MAX_LENGTH];
@@ -21,7 +21,6 @@ int main(int argc, char* argv[]){
 		cin >> from >> to >> length;
 		sc[to].push_back(make_pair(from, length)); 
 	}
-
 	// solution
 	// 시작점은 0으로 고정
 	vector<int> d(hwSize+1, INF);
