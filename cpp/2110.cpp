@@ -4,7 +4,7 @@
 #define DEBUG_MODE 0
 using namespace std;
 
-int solution(int router, vector<int> v){
+int solution(int router, vector<int>& v){
 	int ans=0;
 	int mid;
 
@@ -13,12 +13,13 @@ int solution(int router, vector<int> v){
 	
 	int installed;
 	int st;
-	while( start <= end ){
+	// 1 2 4 8 9
+	while(start <= end){
 		installed = 1;
 		mid = (start + end)/2;
 		st = v[0];
 		for(int i=1; i<v.size(); i++){
-			if( v[i] - st >= mid){
+			if(v[i] - st>= mid){
 				st = v[i];
 				installed++; 
 			}
@@ -48,12 +49,6 @@ int main(int argc, char* argv[]){
 		v.push_back(dist);
 	}
 	sort(v.begin(), v.end()); // 오름차순으로 정렬
-	#if DEBUG_MODE
-	cout << "\n after sort" << '\n';
-	for(int i=0; i<node; i++){
-		cout << v[i];
-	}
-	#endif
 	cout << solution(router, v) << '\n';
 	return 0;
 }
