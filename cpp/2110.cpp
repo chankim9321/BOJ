@@ -1,34 +1,37 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#define DEBUG_MODE 0
+#define ll long long
 using namespace std;
 
-int solution(int router, vector<int>& v){
-	int ans=0;
-	int mid;
+int solution(int routers, vector<int>& v){
+	ll ans=0;
+	ll mid;
 
-	int start = v.front(); // minimum
-	int end = v.back(); 
+	ll start = 0; // minimum
+	ll end = v.back(); 
 	
 	int installed;
-	int st;
+	int router;
 	// 1 2 4 8 9
 	while(start <= end){
 		installed = 1;
-		mid = (start + end)/2;
-		st = v[0];
+		mid = (start + end)/2; // 설정한 임의의 거리값
+		router = v[0];
 		for(int i=1; i<v.size(); i++){
-			if(v[i] - st>= mid){
-				st = v[i];
+			if(v[i] - router >= mid){ // 공유기를 설치한 장소가 설정한 임의의 거리값보다 큰 경우 --> 공유기 설치
+				router = v[i];
+				//cout << "임의의 거리값 : " << mid << ", 설치된 장소의 좌표: " << st << '\n';
 				installed++; 
 			}
+			if(installed > routers) break;
 		}
-		if(installed >= router){ 
+		//cout << "설치된 공유기의 수 : " << installed << '\n';
+		if(installed >= routers){ // 거리간격을 늘려서 공유기의 설치수를 줄여야함.
 			ans = max(ans, mid);	
 			start = mid+1;
 		}
-		else{
+		else{ // 공유기 설치가 요구수보다 작기때문에 거리간격을 늘려야한다.
 			end = mid-1;
 		}
 	}
