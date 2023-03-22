@@ -10,7 +10,6 @@
 int main(int argc, char* argv[]){
 	int fd1, fd2, count;
 	char buf[MAX_BUF];
-	char* writor;
 
 	for(int i=1; i<argc; i++){
 		printf("argv[%d] = %s \n",i,argv[i]);
@@ -29,12 +28,11 @@ int main(int argc, char* argv[]){
 	}
 	printf("fd1 = %d\n",fd1);
 	printf("fd2 = %d\n",fd2);
-	printf("starting..\n");
-	while(read(fd1, buf, sizeof(buf)) > 0){
-		printf("reading.. and writing..\n");
+	printf("Reading and writing..\n");
+	while(read(fd1, buf, strlen(buf)) > 0){
 		write(fd2, buf, strlen(buf));
 	}
-	printf("end!\n");
+	printf("Copy Done!\n");
 
 	close(fd1);
 	close(fd2);
