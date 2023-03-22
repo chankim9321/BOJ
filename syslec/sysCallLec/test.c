@@ -27,7 +27,7 @@ int main(int argc, char* argv[]){
 		exit(1);
 	}
 	printf("Reading and writing..\n");
-	while(read(fd1, buf, strlen(buf)) > 0){
+	while(read(fd1, buf, sizeof(buf)) > 0){
 		write(fd2, buf, strlen(buf));
 	}
 	printf("Copy Done!\n");

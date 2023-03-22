@@ -11,9 +11,6 @@ int main(int argc, char* argv[]){
 	int fd1, fd2, count;
 	char buf[MAX_BUF];
 
-	for(int i=1; i<argc; i++){
-		printf("argv[%d] = %s \n",i,argv[i]);
-	}
 	if(argc != 3){
 		printf("Usage: %s source destination\n", argv[0]);
 		exit(1);		
@@ -26,8 +23,6 @@ int main(int argc, char* argv[]){
 		perror("open");
 		exit(1);
 	}
-	printf("fd1 = %d\n",fd1);
-	printf("fd2 = %d\n",fd2);
 	printf("Reading and writing..\n");
 	while(read(fd1, buf, strlen(buf)) > 0){
 		write(fd2, buf, strlen(buf));
