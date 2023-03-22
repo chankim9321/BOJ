@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#define MAX_BUF 10
+#define MAX_BUF 8
 
 int main(int argc, char* argv[]){
 	int fd1, fd2, count;
@@ -24,7 +24,7 @@ int main(int argc, char* argv[]){
 		exit(1);
 	}
 	printf("Reading and writing..\n");
-	while(read(fd1, buf, strlen(buf)) > 0){
+	while(read(fd1, buf, MAX_BUF-1) > 0){
 		write(fd2, buf, strlen(buf));
 	}
 	printf("Copy Done!\n");
