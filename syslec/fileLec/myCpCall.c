@@ -19,7 +19,7 @@ int main(int argc, char* argv[]){
 		perror("open");
 		exit(1);
 	}
-	if((fd2 = open(argv[2], O_WRONLY|O_CREAT|O_TRUNC, 0644)) < 0){ // 복사될 파일
+	if((fd2 = open(argv[2], O_WRONLY|O_CREAT|O_TRUNC, 0644)) < 0){ // 쓰기,읽기가 가능하고 없으면 만들고, 있으면 지우고 다시써라
 		perror("open");
 		exit(1);
 	}
