@@ -9,8 +9,8 @@
 int main(int argc, char* argv[]){
 	FILE *fp1; // 복사할 파일
 	FILE *fp2; // 생성될 파일
-	char* path = argv[1];
-	char* fname = "mycpfile.c";
+	char* path = argv[1]; // 복사할 파일 경로
+	char* fname = argv[2]; // 생성될 파일 이름
 
 	if((fp1 = fopen(path, "rt")) == NULL){
 		printf("File1 open error\n");
@@ -21,12 +21,8 @@ int main(int argc, char* argv[]){
 		exit(1);
 	}
 	int data, result;
-	while(1){
-		int data = getc(fp1);
-		if(data == EOF) break;
-		else{
-			result = putc(data, fp2);
-		}
+	while((data = getc(fp1)) != EOF){
+		result = putc(data, fp2);
 	}
 	fclose(fp1);
 	fclose(fp2);
