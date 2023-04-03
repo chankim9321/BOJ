@@ -1,5 +1,6 @@
 #include <iostream>
 #define fastio ios_base::sync_with_stdio(false); cin.tie(0); cout.tie(0);
+#define ll long long
 #include <vector>
 #include <algorithm>
 #include <queue>
@@ -25,20 +26,20 @@ void init(){
 		path[to].push_back({from, weight});
 	}
 }
-int dijkstra(int start){
-	priority_queue<pair<int, int>> pq;
-	vector<int> dist;
-	dist.resize(n, 10e8);
+ll dijkstra(int start){
+	priority_queue<pair<ll, int>> pq;
+	vector<ll> dist;
+	dist.resize(n, 10e12);
 	dist[start] = 0;
 	pq.push({0, start});
 	while(!pq.empty()){
 		int current = pq.top().second;
-		int weight = -pq.top().first;
+		ll weight = -pq.top().first;
 		pq.pop();
 		if(dist[current] < weight) continue;
 		for(int i=0; i<path[current].size(); i++){
 			int next = path[current][i].first;
-			int nextWeight = path[current][i].second + weight;
+			ll nextWeight = path[current][i].second + weight;
 			if(isVisible[next]) continue; // 시야에 보이면 갱신 x
 			if(dist[next] > nextWeight){
 				dist[next] = nextWeight;
@@ -50,8 +51,8 @@ int dijkstra(int start){
 }
 int main(){
 	init();
-	int result = dijkstra(0);
-	if(result == 10e8) cout << -1 << '\n';
+	ll result = dijkstra(0);
+	if(result == 10e12) cout << -1 << '\n';
 	else cout << result << '\n';
 	return 0;
 }
