@@ -9,23 +9,23 @@ bool flag = false;
 void init(){
 	cin >> s >> t;
 }
-void backTracking(string input){
-	if(flag) return;
-	if(input.length() == t.length()){
-		if(input == t) flag = true;
-		return;
-	}
-	string next1 = input;
-	string next2 = input;
-	next1 += "A";
-	reverse(next2.begin(), next2.end());
-	next2 += "B";
-	backTracking(next1);
-	backTracking(next2);
-}
 void sol(){
 	init();
-	backTracking(s);
+
+	while(1){
+		if(t[t.length()-1] == 'A'){
+			t.pop_back();
+		}
+		else{
+			t.pop_back();
+			reverse(t.begin(), t.end());
+		}
+		if(t.length() == s.length()){
+			if(s == t) flag = true;
+			break;
+		}
+	}
+
 	if(flag) cout << 1 << '\n';
 	else cout << 0 << '\n';
 }
