@@ -16,7 +16,7 @@ void sol(){
 	int ans = 10e8;
 	sort(v.begin(), v.end());
 	int p1 = 0, p2 = 0;
-	while(p2 < n && p1 < n){
+	while(p1 <= p2){
 		if(v[p2] - v[p1] >= m){
 			ans = min(ans, v[p2] - v[p1]);
 			p1++;
@@ -24,6 +24,7 @@ void sol(){
 		else if(v[p2] - v[p1] < m){
 			p2++;
 		}
+		if(p2 == n) break;
 	}
 	cout << ans << '\n';
 }
