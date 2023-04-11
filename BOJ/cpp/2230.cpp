@@ -15,16 +15,16 @@ void init(){
 void sol(){
 	int ans = 10e8;
 	sort(v.begin(), v.end());
-	int p1 = 0, p2 = 0;
-	while(p1 <= p2){
-		if(v[p2] - v[p1] >= m){
-			ans = min(ans, v[p2] - v[p1]);
-			p1++;
+	int left = 0, right = 0;
+	while(right < n){
+		if(v[right] - v[left] >= m){
+			ans = min(ans, v[right] - v[left]);
+			left++;
 		}
-		else if(v[p2] - v[p1] < m){
-			p2++;
+		else if(v[right] - v[left] < m){
+			right++;
 		}
-		if(p2 == n) break;
+		if(right == n || left == n) break;
 	}
 	cout << ans << '\n';
 }
