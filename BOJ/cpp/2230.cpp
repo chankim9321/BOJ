@@ -13,14 +13,10 @@ void init(){
 	}
 }
 void sol(){
-	if(n == 1){
-		cout << 0 << '\n';
-		return;
-	}
 	int ans = 10e8;
 	sort(v.begin(), v.end());
-	int p1 = 0, p2 = 1;
-	while(p2 < n){
+	int p1 = 0, p2 = 0;
+	while(p2 < n && p1 < n){
 		if(v[p2] - v[p1] >= m){
 			ans = min(ans, v[p2] - v[p1]);
 			p1++;
