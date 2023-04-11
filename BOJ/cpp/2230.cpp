@@ -13,10 +13,10 @@ void init(){
 	}
 }
 void sol(){
-	int ans = 10e8;
+	int ans = 10e8 * 2 + 1;
 	sort(v.begin(), v.end());
 	int left = 0, right = 0;
-	while(right < n){
+	while(left < n && right < n){
 		if(v[right] - v[left] >= m){
 			ans = min(ans, v[right] - v[left]);
 			left++;
@@ -24,7 +24,6 @@ void sol(){
 		else if(v[right] - v[left] < m){
 			right++;
 		}
-		if(right == n || left == n) break;
 	}
 	cout << ans << '\n';
 }
