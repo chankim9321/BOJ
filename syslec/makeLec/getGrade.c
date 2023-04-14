@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-// file : getAvr.c
+// file : getGrade.c
 // 학생 정보를 받아서 등급을 출력
 
 // 구조체 원형
