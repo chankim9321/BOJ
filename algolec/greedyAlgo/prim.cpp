@@ -32,6 +32,7 @@ void init(){
 		int from, to, weight;
 		cin >> from >> to >> weight;
 		edge[from].push_back({to, weight});
+		edge[to].push_back({from, weight});
 	}
 }
 int prim(int start){
@@ -44,6 +45,7 @@ int prim(int start){
 		int weight = -pq.top().first;
 		pq.pop();
 		if(visited[current]) continue; // 이미 방문된 정점이라면 pass
+		// 방문되지 않은 정점이라면
 		visited[current] = true;
 		result += weight;
 		for(int i=0; i<edge[current].size(); i++){ // 현재점에서 이동가능한 정점중에
@@ -59,6 +61,6 @@ int prim(int start){
 int main(int argc, char* argv[]){
 	
 	init();
-	cout << prim(3) << '\n';
+	cout << prim(1) << '\n';
 	return 0;
 }
