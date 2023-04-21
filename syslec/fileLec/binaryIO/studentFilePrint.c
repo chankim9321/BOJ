@@ -15,7 +15,7 @@ int main(int argc, char* argv[]){
 	FILE* rfp;
 	int s1, s2, s3, s4;
 	int n;
-	char* filePath = argv[1];
+	char* filePath = argv[1]; // 바이너리 파일
 	if((rfp = fopen(filePath, "rb")) == NULL){
 		perror("fopne : couldn't find file.");
 		exit(1);

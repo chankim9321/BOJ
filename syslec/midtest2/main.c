@@ -3,6 +3,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include <sys/stat.h>
+#include <sys/wait.h>
 
 int main(int argc, char *argv[]){
 	int status;
@@ -15,16 +16,22 @@ int main(int argc, char *argv[]){
 	}
 	else if(pid == 0){ // child
 		// mymv
-		if(execlp(argv[1] argv[1], (char*)NULL) < 0){
-			perror("execlp child p");
+		char* arg[2];
+		arg[0] = argv[1];
+		arg[1] = NULL;
+		if(execv(argv[1], arg) < 0){
+			perror("execvp child p");
 			exit(1);
 		}
 	}
 	else{
 		wait(&status);
 		// myfile
-		if(execlp(argv[2], argv[2], (char*)NULL) < 0){
-			perror("execlp parent p");
+		char* arg[2];
+		arg[0] = argv[2];
+		arg[1] = NULL;
+		if(execv(argv[2], arg) < 0){
+			perror("execvp parent p");
 		}
 	}
 

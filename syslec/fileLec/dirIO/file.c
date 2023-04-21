@@ -1,17 +1,19 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 int main(int argc, char* argv[]){
 	char* filename = argv[1];
 	struct stat buf;
-	stat(filename, &buf);
+	if(lstat(filename, &buf) < 0){
+		perror("stat error");
+		exit(1);
+	}
 
 	printf("Mode = %o\n", (unsigned int)buf.st_mode);
-	int kind = buf.st_mode & 0xF000;
-	//printf("kind = %d\n", kind);
-	if(kind == 0xA000) printf("%s : symbolic\n",filename);
-	if(kind == 0x4000) printf("%s : Directory\n",filename);
-	if(kind == 0x8000) printf("%s : Regular \n", filename);
+	if(S_ISLNK(buf.st_mode)) printf("%s : symbolic\n", filename);
+	if(S_ISDIR(buf.st_mode)) printf("%s : Directory\n", filename);
+	if(S_ISREG(buf.st_mode)) printf("%s : Regular \n", filename);
 	return 0;
 }
