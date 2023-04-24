@@ -49,8 +49,8 @@ void init(){
 }
 int kruskal(){
 	int result = 0;
-	sort(edge.begin(), edge.end()); // weight 를 기준으로 오름차순 정렬
-	for(int i=0; i<edge.size(); i++){
+	sort(edge.begin(), edge.end()); // weight 를 기준으로 오름차순 정렬 // 시간 복잡도는 m log m
+	for(int i=0; i<edge.size(); i++){ // 시간 복잡도는 m - 1
 		int from = edge[i].second.first;
 		int to = edge[i].second.second;
 		int weight = edge[i].first;
