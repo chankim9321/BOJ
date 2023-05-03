@@ -6,6 +6,7 @@
 int iter = 0;
 int reverse = 0;
 void SigIntHandler(int signo) {
+	printf("SIGINT 발생! 카운트다운을 재시작 합니다\n");
 	iter = 1;
 }
 void SigTermHandler(int signo){
@@ -14,6 +15,7 @@ void SigTermHandler(int signo){
 	exit(1);
 }
 void SigUsrHandler(int signo){ // 카운트다운 역순 출력
+	printf("SIGUSR1 발생! 카운트다운 역순 출력을 시작합니다\n");
 	reverse = 1;	
 	for(int i=1; i<=10; i++){
 		printf("%d.. \n", i);
