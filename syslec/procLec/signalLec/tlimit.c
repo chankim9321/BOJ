@@ -10,7 +10,7 @@ int pid;
 int isEnd = 0;
 
 void sigAlrmHandler(int signo){
-	printf("Signal Handler Signal Number: %d\n", signo);
+	printf("미리듣기가 종료됩니다. \n");
 	if(!isEnd){
 		kill(pid, SIGINT); // 자식 죽임
 	}
@@ -18,12 +18,6 @@ void sigAlrmHandler(int signo){
 }
 void sigChildHandler(int signo){
 	kill(getppid(), SIGALRM); // 부모 깨움
-}
-void playing(){
-	for(int i=1; i<=10; i++){
-		printf("playing %d seconds.\n", i);
-		sleep(1);
-	}
 }
 int main(int argc, char* argv[]){
 	timer = atoi(argv[1]);
