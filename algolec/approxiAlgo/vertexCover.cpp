@@ -90,12 +90,12 @@ pair<int, int> getArbitraryEdge(){ // 임의의 선분을 반환하는 함수
 	}
 	return {0,0};
 }
-int main(int argc, char* argv[]){
+void maximalMatching(){
 	init();
 	set<pair<int, int>> edgeSet; 
 	set<int> vertSet;
 	
-	cout << "알고리즘 시작" << '\n';
+	cout << "극대매칭 알고리즘 시작" << '\n';
 	pair<int, int> startEdge = {1,2}; // 시작 선분
 	edgeSet.insert(startEdge);
 	updateVertSet(startEdge, vertSet);
@@ -113,8 +113,51 @@ int main(int argc, char* argv[]){
 	cout << " -------- Result --------- " << '\n';
 	cout << " 모든 정점을 커버하는 간선은 다음과 같다. " << '\n';
 	set<pair<int, int>>::iterator iter;
+	set<int> resultVert;
 	for(iter = edgeSet.begin(); iter != edgeSet.end(); iter++){
 		cout << "(" << iter->first << ", " << iter->second << ")" << '\n';
+		resultVert.insert(iter->first);
+		resultVert.insert(iter->second);
 	}
+}
+bool cmp(pair<int, int> a, pair<int, int> b){
+	return a.first > b.first;
+}
+void vertexCoveringWithGreedy(){
+	cout << "정점 커버 with Greedy, Start" << '\n';
+	init();
+	set<int> v;
+	// 정점별 인접한 간선의 수를 저장
+	while(1){
+		vector<pair<int, int>> numberOfEdges(fullVert+1, {0,0}); // 인접한 간선 수, 정점 번호
+		for(int i=1; i<=fullVert; i++){
+			numberOfEdges[i].second = i;
+			for(int j=1; j<=fullVert; j++){
+				if(edges[i][j] == true){
+					numberOfEdges[i].first++;
+				}
+			}
+		}
+		sort(numberOfEdges.begin(), numberOfEdges.end(), cmp);
+		if(numberOfEdges[0].first == 0) break; // 모든 간선이 다 커버되었을 때
+		int maxEdgesVert = numberOfEdges[0].second; // 가장 많은 인접간선을 가진 정점
+		v.insert(maxEdgesVert);
+		for(int i=1; i<=fullVert; i++){
+			edges[maxEdgesVert][i] = false; // 방문 처리
+			edges[i][maxEdgesVert] = false;
+		}
+	}
+	cout << " -------- Result --------- " << '\n';
+	cout << " 모든 간선을 커버하는 정점은 다음과 같다. " << '\n';
+	cout << "(";
+	for(set<int>::iterator i = v.begin(); i != v.end(); i++){
+		cout << *i << ", ";
+	}
+	cout << ")" << '\n';
+}
+int main(int argc, char* argv[]){
+	maximalMatching();
+	cout << '\n';
+	vertexCoveringWithGreedy();
 	return 0;
 }
