@@ -32,7 +32,6 @@ int main(){
 		}
 		// Start of Critical Section
         strcpy(shmaddr, "University");
-        sleep(1);
         strcpy(buf, shmaddr);
 		// End of Critical Section
 		if(semPost(semid) == -1){

@@ -10,7 +10,7 @@ void* Count(void *arg){
 	char* name = (char*)arg;
 	pthread_mutex_lock(&mutex);
 	for(i=1; i<10; i++){
-		sleep(1);
+		sleep();
 		printf("%s gugu : %d x %d = %d\n", name, n, i, n*i);	
 	}
 	n++;

@@ -3,10 +3,15 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-int main() {
+int main(int argc, char* argv[]) {
     int fd;
     off_t pos;
 
+	if(argc != 2){
+		fprintf(stderr, "argc required 2 \n");
+		exit(1);
+	}
+	int size = atoi(argv[1]);
     // 파일 디스크립터 열기
     fd = open("holefile", O_WRONLY | O_CREAT | O_TRUNC, 0666);
     if (fd == -1) {
@@ -15,7 +20,7 @@ int main() {
     }
 
     // 파일 크기 설정
-    if (lseek(fd, 10000, SEEK_SET) == -1) {
+    if (lseek(fd, size, SEEK_SET) == -1) {
         perror("lseek");
         exit(1);
     }

@@ -4,16 +4,15 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <stdlib.h>
-
 int pidList[5]; // 자식 ps list
 int pidEnd[5]; // 프로세스가 끝났는지 확인하는 배열
 int cnt = 0;
 int pid;
 int k = 0;
-
+int n = 0;
 void sigChildHandler(int signo){ // 부모입장에서 받음
     int status, pid;
-	if((pid = waitpid(pidList[k], &status, 0)) > 0){
+	if((pid = waitpid(pidList[k], &status, WNOHANG)) > 0){
 		printf("child terminated : %d, status = %d, %d\n", pid, WIFEXITED(status), WIFSIGNALED(status));
 		cnt++;
 		pidEnd[k++] = 1;
@@ -22,7 +21,11 @@ void sigChildHandler(int signo){ // 부모입장에서 받음
 void sigAlrmHandler(int signo){
     return;
 }
+void sigUsr1Handler(int signo){
+	n++;	
+}
 void setSignalHandler(){
+	signal(SIGUSR1, sigUsr1Handler);
     signal(SIGCHLD, sigChildHandler);
     signal(SIGALRM, sigAlrmHandler);
 }
@@ -42,21 +45,30 @@ int main(int argc, char* argv[]){
             ...
             ...
         */
+		printf("pid = %d, 작업 종료. 대기중\n", getpid());
+		kill(getppid(), SIGUSR1);	
 		pause();
     }
     else{
-		int idx = 0;
-		// 자식 프로세스의 수행시간이 전부 랜덤이고, 순차적으로 끝내야 한다면
-		// 부모 프로세스는 자식프로세스 수행이 끝났을 때, 즉 pause() 실행될 때 까지
-		// 알람 시그널을 계속 호출한다.
-		// if문을 통해 프로세스 종료의 여부를 확인후 idx값을 증가시켜 순차적으로 확인, 종료한다.
-        while(cnt < 5){
-			printf("대기중\n");
-			kill(pidList[idx], SIGALRM);
-			if(pidEnd[idx]) idx++;
-			sleep(1);
+		int player = fork();
+		if(player == 0){
+			if(execl(argv[1], (char*)NULL) == -1){ // 노래재생
+				perror("execl");
+				exit(1);
+			}
 		}
-        printf("부모 종료\n");
+		else{
+			int idx = 0;
+			int status;
+			while(cnt < 5){
+				if(n == 5){
+					kill(pidList[idx], SIGALRM);
+					if(pidEnd[idx]) idx++;
+				}
+			}
+			kill(player, SIGINT); // 노래 종료
+			printf("부모 종료\n");
+		}
     }
     return 0;
 }

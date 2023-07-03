@@ -27,7 +27,7 @@ int main(int argc, char* argv[]){
 	}
 	char a[10];
 	strcpy(a, msgType);
-	mesg.mtype = a[0] - '0'; // 타입지정
+	mesg.mtype = a[0] - '0'; // 메시지 채널 지정
 	strcpy(mesg.mtext, argv[2]);
 
 	if(msgsnd(msgid, (void*)&mesg, 80, IPC_NOWAIT) == -1){

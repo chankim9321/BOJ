@@ -25,7 +25,7 @@ int main(int argc, char* argv[]){
 		exit(1);
 	}
 	// 파일 오픈
-	if((fd1 = open(filename, O_RDWR)) == -1){ // 복사할 파일
+	if((fd1 = open(filename, O_RDONLY)) == -1){ // 복사할 파일
 		perror("fd1 open");
 		exit(1);
 	}		
@@ -47,7 +47,7 @@ int main(int argc, char* argv[]){
 		if((buf.st_size - offset) < length){
 			length = buf.st_size - offset;
 		}
-		addr1 = mmap(0, length, PROT_READ | PROT_WRITE, MAP_SHARED, fd1, offset); // 메모리 매핑
+		addr1 = mmap(0, length, PROT_READ, MAP_SHARED, fd1, offset); // 메모리 매핑
 		if(addr1 == MAP_FAILED){
 			perror("mmap addr1");
 			exit(1);
@@ -70,6 +70,7 @@ int main(int argc, char* argv[]){
 		cycle++;
 	}while(offset < buf.st_size);
 	printf("파일을 쓰는데 호출한 mmap 횟수 = %d\n", cycle);
+	
 	close(fd1);
 	close(fd2);
 }

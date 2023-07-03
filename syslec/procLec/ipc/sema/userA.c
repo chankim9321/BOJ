@@ -47,7 +47,6 @@ int main(int argc, char* argv[]){
 				}
 				// Start of Critical Section
 				strcpy(shmaddr, "Keimyung");
-				sleep(1);
 				strcpy(buf, shmaddr);
 				// End of Critical Section
 				if(semPost(semid) == -1){
