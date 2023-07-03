@@ -39,6 +39,7 @@ void tracking(int s, int sum, vector<int> road){
 		road.push_back(path[s][i].first);
 		tracking(path[s][i].first, sum + path[s][i].second, road);
 		road.pop_back();
+		if(flag) return;
 	}
 }
 void dijkstra(int s){

@@ -35,7 +35,7 @@ void setDirection(int &x, int &y, int dir){
 }
 int getSquareNumber(){
 	int ans = 0;
-	for(int i=0; i<101; i++){
+	for(int i=0; i<100; i++){
 		for(int j=0; j<100; j++){
 			if(visited[i][j] && visited[i][j+1] && visited[i+1][j] && visited[i+1][j+1]){
 				ans++;	
