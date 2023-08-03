@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package protocol;
+
+import "google/protobuf/empty.proto";
+
+option go_package = "./protocol_update";
+
+message FileChunk {
+    bytes contents = 1;
+    string fileName = 2;
+    string serviceType = 3;
+    string nodeAddress = 4;
+    string DNS = 5;
+}
+message FileMetadata{
+    string fileID = 1;
+    string fileName = 2;
+    string fileSize = 3;
+    string sender = 4;
+    string recv = 5;
+}
+// Filelist from DB
+message FileInfoList{
+    message FileInfo { 
+        string fileID = 1;
+        string fileName = 2;
+        string fileSize = 3;
+    }
+    repeated FileInfo filelist = 3;
+}
+message DispatchInfo{
+    string sender = 1;
+    string recv = 2;
+}
+service FileTransferService {
+    rpc GetFile(FileMetadata) returns (stream FileChunk);
+    rpc UploadFile(stream FileChunk) returns (google.protobuf.Empty);
+    rpc GetFileList(DispatchInfo) returns (FileInfoList);
+}

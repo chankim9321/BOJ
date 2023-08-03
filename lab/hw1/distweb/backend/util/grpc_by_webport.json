@@ -1,0 +1,8 @@
+{
+  "RPCaddr": {
+    "5001": "localhost:9001",
+    "5002": "localhost:9002",
+    "5003": "localhost:9003",
+    "5004": "localhost:9004"
+  }
+}
