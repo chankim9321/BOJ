@@ -1,0 +1,69 @@
+.fileUploadButtonFree {
+  width: 500px;
+  height: 50px;
+  margin: 10px 10px 10px 20px;
+  border-radius: 20px;
+  border-color: #3498db;
+  color: #fff;
+  box-shadow: 0 0 40px 40px #3498db inset, 0 0 0 0 #3498db;
+  transition: all 150ms ease-in-out;
+}
+.fileUploadButtonFree:hover {
+  box-shadow: 0 0 10px 0 #3498db inset, 0 0 10px 4px #3498db;
+  color: black;
+}
+.fileUploadButtonFull {
+  width: 500px;
+  height: 50px;
+  margin: 10px 10px 10px 20px;
+  border-radius: 20px;
+  border-color: red;
+  color: #fff;
+  box-shadow: 0 0 40px 40px red inset, 0 0 0 0 red;
+  transition: all 150ms ease-in-out;
+}
+.fileUploadButtonFull:hover {
+  box-shadow: 0 0 10px 0 red inset, 0 0 10px 4px red;
+  color: black;
+}
+.fileInputLabel {
+  text-align: center;
+  display: inline-block;
+  margin: 10px 10px 10px 20px;
+  border-radius: 20px;
+  border-color: #3498db;
+  color: #fff;
+  box-shadow: 0 0 40px 40px #3498db inset, 0 0 0 0 #3498db;
+  transition: all 150ms ease-in-out;
+  width: 500px;
+  height: 40px;
+  padding: 20px 0 0 0;
+}
+.fileInputLabel:hover {
+  box-shadow: 0 0 10px 0 #3498db inset, 0 0 10px 4px #3498db;
+  color: black;
+  background: #fff;
+}
+.fileInput {
+  /* display: none; */
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+.fileSelected {
+  display: inline-block;
+  width: 500px;
+  height: 40px;
+  text-align: center;
+  margin: 10px 10px 10px 20px;
+  padding: 20px 0 0 0;
+  border-radius: 20px;
+  color: #fff;
+  border-color: #3498db;
+  background-color: #3498db;
+}
