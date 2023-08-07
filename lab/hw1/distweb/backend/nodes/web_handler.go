@@ -61,12 +61,17 @@ func UploadFileToSingleNodeAPI(addr string) {
 	http.HandleFunc("/upload_single", func(w http.ResponseWriter, r *http.Request) {
 		log.Println("UploadFileToSingleNodeAPI start running!")
 		file, handler, err := r.FormFile("file")
+		nodeAddr := r.FormValue("node") // 목적지 노드
+		log.Println(nodeAddr)
 		if err != nil {
 			http.Error(w, "Failed to retrieve file", http.StatusInternalServerError)
 			return
 		}
 		defer file.Close()
 
+		objectAddr := strings.Split(nodeAddr, ":")[2]        // 웹 포트번호 xxxx
+		objectAddr = util.GetRPCAddressByWebPort(objectAddr) // grpc addr
+		log.Println(objectAddr)
 		port := strings.Split(addr, ":")[1]
 		localStorage := util.GetStoragePathByMapping(port)
 		// 파일 저장
@@ -79,14 +84,21 @@ func UploadFileToSingleNodeAPI(addr string) {
 		io.Copy(f, file)
 
 		metadata := dispatch.FileUploadRequestMetadata{
-			RecvAddress:   addr,
+			RecvAddress:   objectAddr,
 			SenderAddress: addr,
 			FilePath:      localStorage,
 			FileName:      handler.Filename,
 		}
-		err = dispatch.UploadRequest(metadata)
-		if err != nil {
-			log.Fatal("upload request failed: ", err)
+		if objectAddr == addr {
+			err = dispatch.UploadRequest(metadata)
+			if err != nil {
+				log.Fatal("upload request failed: ", err)
+			}
+		} else {
+			err = dispatch.UploadRequestToNode(metadata)
+			if err != nil {
+				log.Fatal("upload request failed: ", err)
+			}
 		}
 		os.Remove(localStorage + handler.Filename)
 		// 성공적인 응답 전송

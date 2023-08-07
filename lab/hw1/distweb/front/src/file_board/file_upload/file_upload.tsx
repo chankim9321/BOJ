@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import styles from "./file_upload.module.css";
+import nodeAddress from "../file_list/nodeAddr.json";
 interface NodeProps {
   nodeID: number;
   capacity: number;
+  reRender: () => void;
 }
 const FileUpload: React.FC<NodeProps> = (props) => {
+  const nodeAddr: { [key: number]: string } = nodeAddress;
   const [nodeID, setNodeID] = useState(props.nodeID);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [fileName, setFileName] = useState<string>("");
@@ -30,6 +33,7 @@ const FileUpload: React.FC<NodeProps> = (props) => {
       console.log("uploadSingleNode test");
       const formData = new FormData();
       formData.append("file", selectedFile);
+      formData.append("node", nodeAddr[props.nodeID]);
       fetch("/upload_single", {
         method: "POST",
         body: formData,
@@ -41,6 +45,7 @@ const FileUpload: React.FC<NodeProps> = (props) => {
         .catch((error) => {
           console.error("Error uploading file:", error);
         });
+      alert("파일이 현재 노드에 업로드 되었습니다!");
     }
   };
   const uploadAllNodes = () => {
@@ -58,6 +63,7 @@ const FileUpload: React.FC<NodeProps> = (props) => {
         .catch((error) => {
           console.error("Error uploading file:", error);
         });
+      alert("파일이 모든 노드에 업로드 되었습니다!");
     }
   };
   return (

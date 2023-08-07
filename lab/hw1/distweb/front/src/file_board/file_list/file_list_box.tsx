@@ -6,6 +6,7 @@ import nodeAddress from "./nodeAddr.json";
 
 interface NodeProps {
   nodeID: number;
+  reRender: () => void;
 }
 const FileListBox: React.FC<NodeProps> = (props) => {
   interface FileItem {
@@ -60,19 +61,17 @@ const FileListBox: React.FC<NodeProps> = (props) => {
           },
         });
         // 응답 데이터를 상태에 업데이트
+        setFiles(response.data);
         console.log(response.data);
-        if (response.data === null) {
-          throw Error;
-        } else {
-          setFiles(response.data);
-          let nodeCapacity: number = 0;
-          response.data.map((file: FileItem) => {
-            nodeCapacity += file.size;
-          });
-          setCapacity(nodeCapacity);
+        let nodeCapacity: number = 0;
+        response.data.map((file: FileItem) => {
+          nodeCapacity += file.size;
+        });
+        setCapacity(nodeCapacity);
+      } catch (error: any) {
+        if (error.code !== undefined) {
+          setErrOccured(Error());
         }
-      } catch (error) {
-        setErrOccured(Error());
         setCapacity(0);
         setFiles([]);
       }
@@ -106,7 +105,7 @@ const FileListBox: React.FC<NodeProps> = (props) => {
               </tr>
             </thead>
             <tbody>
-              {errOccured != null ? (
+              {errOccured !== null ? (
                 <h2 className={styles.disconnectionError}>
                   해당 노드와 연결이 끊겼습니다.
                 </h2>
@@ -128,7 +127,11 @@ const FileListBox: React.FC<NodeProps> = (props) => {
           </table>
         </div>
       </div>
-      <FileUpload nodeID={props.nodeID} capacity={maxCapacity - capacity} />
+      <FileUpload
+        nodeID={props.nodeID}
+        capacity={maxCapacity - capacity}
+        reRender={props.reRender}
+      />
     </>
   );
 };

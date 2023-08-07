@@ -2,9 +2,6 @@
   border: 5px solid black;
   margin: 20px;
 }
-.tableHead {
-  font-size: 50px;
-}
 .tableCell {
   padding: 20px;
   border: 2px solid lightblue;
@@ -22,7 +19,7 @@
 .fileTableContainer {
   overflow-y: scroll;
   height: 400px;
-  width: 600px;
+  width: 650px;
   border: 5px solid lightgreen;
   border-radius: 10px;
   margin: 30px;
