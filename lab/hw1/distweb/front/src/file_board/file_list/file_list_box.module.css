@@ -1,0 +1,54 @@
+.tableRow {
+  border: 5px solid black;
+  margin: 20px;
+}
+.tableCell {
+  padding: 20px;
+  border: 2px solid lightblue;
+  border-radius: 20px;
+}
+.tableCellName {
+  padding: 20px;
+  border: 2px solid lightblue;
+  border-radius: 20px;
+}
+.tableCellName:hover {
+  background-color: grey;
+  cursor: pointer;
+}
+.fileTableContainer {
+  overflow-y: scroll;
+  height: 400px;
+  width: 650px;
+  border: 5px solid lightgreen;
+  border-radius: 10px;
+  margin: 30px;
+  float: left;
+}
+.fileTable {
+  border-spacing: 10px;
+}
+.capacityFree {
+  margin: 30px;
+  text-align: center;
+  width: 400px;
+  height: 50px;
+  border: 3px solid greenyellow;
+  border-radius: 30px;
+  background: #2c3e50;
+  color: greenyellow;
+}
+.capacityFull {
+  margin: 30px;
+  text-align: center;
+  width: 400px;
+  height: 50px;
+  border: 3px solid red;
+  border-radius: 30px;
+  background: #2c3e50;
+  color: red;
+}
+.disconnectionError {
+  border-spacing: 20px;
+  color: lightskyblue;
+}

@@ -1,0 +1,8 @@
+{
+  "ports": {
+    "9001": "./nodes/node_1/temp_file_storage/",
+    "9002": "./nodes/node_2/temp_file_storage/",
+    "9003": "./nodes/node_3/temp_file_storage/",
+    "9004": "./nodes/node_4/temp_file_storage/"
+  }
+}
