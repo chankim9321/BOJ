@@ -51,9 +51,8 @@ func (s *FileTransferServer) UploadFile(stream pb.FileTransferService_UploadFile
 
 	// db Handling
 	log.Println("db handling server test")
-	dbAddress := util.GetDBaddressByMapping(dstPort) // get db server addr
 
-	conn, err := db.GetMongoConnection(dbAddress)
+	conn, err := db.GetMongoConnection()
 	if err != nil {
 		log.Fatal("DB connection failed : ", err)
 	}
@@ -77,11 +76,10 @@ func (s *FileTransferServer) GetFile(metadata *pb.FileMetadata, stream pb.FileTr
 	recvAddr := metadata.Recv
 	senderAddr := metadata.Sender
 	dstPort := strings.Split(recvAddr, ":")[1]
-	dbAddress := util.GetDBaddressByMapping(dstPort)
 	localStoragePath := util.GetStoragePathByMapping(dstPort)
 
 	// db Handling
-	conn, err := db.GetMongoConnection(dbAddress)
+	conn, err := db.GetMongoConnection()
 	if err != nil {
 		log.Fatal("DB connection failed : ", err)
 	}
@@ -127,10 +125,7 @@ func (s *FileTransferServer) GetFile(metadata *pb.FileMetadata, stream pb.FileTr
 }
 func (s *FileTransferServer) GetFileList(ctx context.Context, metadata *pb.DispatchInfo) (*pb.FileInfoList, error) {
 	// DB Handling
-	recvAddr := metadata.Recv
-	dstPort := strings.Split(recvAddr, ":")[1]
-	dbAddress := util.GetDBaddressByMapping(dstPort)
-	conn, err := db.GetMongoConnection(dbAddress)
+	conn, err := db.GetMongoConnection()
 	if err != nil {
 		log.Fatal("DB connection failed : ", err)
 	}

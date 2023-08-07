@@ -27,7 +27,7 @@ func (c *Client) UploadFile(ctx context.Context, fileName string, filePath strin
 	// 스트림 요청
 	stream, err := c.client.UploadFile(ctx)
 	if err != nil {
-		log.Println("Failed to create stream: %v", err)
+		log.Printf("Failed to create stream: %v\n", err)
 		return
 	}
 

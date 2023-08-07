@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import styles from "./file_upload.module.css";
 import nodeAddress from "../file_list/nodeAddr.json";
 interface NodeProps {
-  nodeID: number;
+  nodeID: string;
   capacity: number;
   reRender: () => void;
 }
 const FileUpload: React.FC<NodeProps> = (props) => {
-  const nodeAddr: { [key: number]: string } = nodeAddress;
+  // const nodeAddr: { [key: number]: string } = nodeAddress;
   const [nodeID, setNodeID] = useState(props.nodeID);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [fileName, setFileName] = useState<string>("");
@@ -33,7 +33,7 @@ const FileUpload: React.FC<NodeProps> = (props) => {
       console.log("uploadSingleNode test");
       const formData = new FormData();
       formData.append("file", selectedFile);
-      formData.append("node", nodeAddr[props.nodeID]);
+      formData.append("node", props.nodeID);
       fetch("/upload_single", {
         method: "POST",
         body: formData,

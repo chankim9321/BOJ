@@ -18,7 +18,6 @@ func StartWebServer(ip string, port string, grpcPort string) {
 	http.Handle("/", http.FileServer(http.Dir("../front/build")))
 
 	// Send file list
-	log.Println(ip + port)
 	GetFilelistAPI(ip + grpcPort)
 	UploadFileToSingleNodeAPI(ip + grpcPort)
 	UploadFileToAllNodeAPI(ip + grpcPort)
@@ -41,5 +40,5 @@ func StartGRPCServer(ip string, port string) {
 	}
 }
 func StartDBServer(ip string, port string) {
-	db.GetMongoConnection(ip + port)
+	db.GetMongoConnection()
 }
