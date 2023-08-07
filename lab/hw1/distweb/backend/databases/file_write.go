@@ -53,9 +53,6 @@ func WriteFileOnMongoDB(conn *mongo.Client, filePath, filename string) error {
 		}
 		totalSize += result.FileSize
 	}
-	log.Println("get total size end!")
-	log.Println("total size: ", int(totalSize)/mb)
-	log.Println("total Capacity,", totalCapacity)
 	totalCapacity -= int(totalSize) / mb // 허용가능한 DB capacity
 	// 파일 사이즈가 초과
 	if totalCapacity < int(openDataStat.Size())/mb {

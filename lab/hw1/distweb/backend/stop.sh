@@ -13,6 +13,3 @@ stop_server() {
 }
 
 stop_server "n1.pid"
-stop_server "n2.pid"
-stop_server "n3.pid"
-stop_server "n4.pid"

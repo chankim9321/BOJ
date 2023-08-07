@@ -3,23 +3,19 @@ package dispatch
 import (
 	"context"
 	"log"
-	"strings"
 	"time"
 
 	db "backend/databases"
 	cs "backend/protocol/client_side"
-	util "backend/util"
 
 	grpc "google.golang.org/grpc"
 )
 
 func DownloadRequest(metadata FileDownloadRequestMetadata) error {
-	dstPort := strings.Split(metadata.RecvAddress, ":")[1]
 	localStoragePath := metadata.FilePath
 	fileID := metadata.FileID
-	dbAddr := util.GetDBaddressByMapping(dstPort)
 	// DB connection
-	conn, err := db.GetMongoConnection(dbAddr)
+	conn, err := db.GetMongoConnection()
 	if err != nil {
 		log.Fatal("DB connection failed : ", err)
 	}

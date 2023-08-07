@@ -5,7 +5,7 @@ import FileUpload from "../file_upload/file_upload";
 import nodeAddress from "./nodeAddr.json";
 
 interface NodeProps {
-  nodeID: number;
+  nodeID: string;
   reRender: () => void;
 }
 const FileListBox: React.FC<NodeProps> = (props) => {
@@ -22,10 +22,8 @@ const FileListBox: React.FC<NodeProps> = (props) => {
   const downloadFile = async (fileId: string, filename: string) => {
     try {
       // 파일 ID를 백엔드로 전송
-      const nodeAddr: { [key: number]: string } = nodeAddress;
-      const otherNodeAddr: string = nodeAddr[props.nodeID];
       fetch(
-        `/download?fileId=${fileId}&nodeAddr=${otherNodeAddr}&fileName=${filename}`,
+        `/download?fileId=${fileId}&nodeAddr=${props.nodeID}&fileName=${filename}`,
         { method: "GET" }
       ).then((response) => {
         if (!response.ok) {
@@ -48,21 +46,16 @@ const FileListBox: React.FC<NodeProps> = (props) => {
     }
   };
   useEffect(() => {
-    const nodeAddr: { [key: number]: string } = nodeAddress;
-    const otherNodeAddr: string = nodeAddr[props.nodeID];
     const fetchData = async () => {
       try {
         // 데이터를 요청하여 응답 받기
-        console.log(currentUrl);
-        console.log(otherNodeAddr);
         const response = await axios.get(currentUrl + "/files", {
           params: {
-            node: otherNodeAddr,
+            node: props.nodeID, // 노드 ID (number) 전달
           },
         });
         // 응답 데이터를 상태에 업데이트
         setFiles(response.data);
-        console.log(response.data);
         let nodeCapacity: number = 0;
         response.data.map((file: FileItem) => {
           nodeCapacity += file.size;
